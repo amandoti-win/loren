@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect x="4" y="4" width="56" height="56" rx="12" fill="#2b3040"/>
-  <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 27v-9h9M46 27v-9h-9M18 37v9h9M46 37v9h-9"/>
-  </g>
-  <path d="M32 40V25M25.5 31.5 32 25l6.5 6.5" fill="none" stroke="#5eb8ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"><defs><linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a1a34"/><stop offset="1" stop-color="#4a0f22"/></linearGradient></defs><rect width="1024" height="1024" rx="224" fill="url(#t)"/><path d="M150 300V220Q150 150 220 150H300 M724 150H804Q874 150 874 220V300 M874 724V804Q874 874 804 874H724 M300 874H220Q150 874 150 804V724" fill="none" stroke="#F3E9D2" stroke-opacity="0.9" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(512 512) scale(.68) translate(-540 -520)" fill="none" stroke="#F3E9D2" stroke-width="68" stroke-linecap="round" stroke-linejoin="round"><circle cx="300" cy="400" r="150"/><circle cx="600" cy="400" r="150"/><path d="M706 506L840 640"/><circle cx="880" cy="680" r="48"/></g></svg>
