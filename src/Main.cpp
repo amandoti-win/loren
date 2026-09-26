@@ -53,6 +53,7 @@ int main(int argc, char **argv)
     aboutData.addAuthor(u"David Redondo"_s, {}, u"kde@david-redondo.de"_s);
     aboutData.addAuthor(u"Noah Davis"_s, {}, u"noahadvs@gmail.com"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    aboutData.setOrganizationDomain("amandoti.win");
     aboutData.setDesktopFileName(u"win.amandoti.lorgn"_s);
     KAboutData::setApplicationData(aboutData);
     app.setWindowIcon(QIcon::fromTheme(u"lorgn"_s));
