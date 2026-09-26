@@ -73,6 +73,7 @@ public:
 
     Q_INVOKABLE void startRecording(VideoPlatform::RecordingMode mode, bool withPointer = Settings::videoIncludePointer());
     Q_INVOKABLE void finishRecording();
+    Q_INVOKABLE void deleteUpload(const QString &deleteUrl);
     bool videoMode() const;
     QUrl currentVideo() const;
     QString recordedTime() const;

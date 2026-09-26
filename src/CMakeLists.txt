@@ -165,6 +165,7 @@ qt_target_qml_sources(spectacle
     Gui/CaptureSettingsColumn.qml
     Gui/CopiedMessage.qml
     Gui/LinkCopiedMessage.qml
+    Gui/UploadDeletedMessage.qml
     Gui/DashedOutline.qml
     Gui/DelaySpinBox.qml
     Gui/DialogPage.qml

@@ -177,9 +177,14 @@ void ViewerWindow::showCopiedMessage()
     showInlineMessage("%1/Gui/CopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});
 }
 
-void ViewerWindow::showLinkCopiedMessage()
+void ViewerWindow::showLinkCopiedMessage(const QString &deleteUrl)
 {
-    showInlineMessage("%1/Gui/LinkCopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});
+    showInlineMessage("%1/Gui/LinkCopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {{u"deleteUrl"_s, deleteUrl}});
+}
+
+void ViewerWindow::showUploadDeletedMessage()
+{
+    showInlineMessage("%1/Gui/UploadDeletedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});
 }
 
 void ViewerWindow::showLocationCopiedMessage()

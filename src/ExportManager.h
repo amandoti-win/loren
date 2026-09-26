@@ -123,6 +123,12 @@ public:
      */
     void exportImage(ExportManager::Actions actions, QUrl url = {});
 
+    /// The delete address of the most recent upload, empty if the server offered none.
+    QString lastDeleteUrl() const;
+
+    /// Asks the server to delete an earlier upload. Emits uploadDeleted() or errorMessage().
+    void deleteUpload(const QString &deleteUrl);
+
     /**
      * Export an video with the given actions using the given URL or an automatically generated URL.
      */
@@ -139,6 +145,7 @@ public:
     void doPrint(QPrinter *printer);
 
 Q_SIGNALS:
+    void uploadDeleted();
     void imageChanged();
 
     void errorMessage(const QString &str);
@@ -164,6 +171,8 @@ private:
     Uploader *m_uploader = nullptr;
     Uploader *m_videoUploader = nullptr;
     void copyLinkToClipboard(const QString &link);
+    Uploader *m_deleter = nullptr;
+    QString m_lastDeleteUrl;
     std::unique_ptr<QLockFile> m_tempDirLock;
     std::unique_ptr<QTemporaryDir> m_tempDir;
     QList<QUrl> m_usedTempFileNames;

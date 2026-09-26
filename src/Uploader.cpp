@@ -13,6 +13,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QRegularExpression>
+#include <QDateTime>
+#include <QDir>
+#include <QSaveFile>
 #include <QStandardPaths>
 #include <QUrlQuery>
 
@@ -74,6 +77,24 @@ QString extractValue(const QJsonObject &spec, const QString &text)
         return m.lastCapturedIndex() > 0 ? m.captured(1) : m.captured(0);
     }
     return text.trimmed();
+}
+
+// Keeps a private record of uploads so a link can still be deleted after the message is gone.
+void appendHistory(const QString &link, const QString &deleteUrl, int expires)
+{
+    const QString base = qEnvironmentVariable("XDG_STATE_HOME", QDir::homePath() + u"/.local/state"_s);
+    const QString dir = base + u"/lorgn"_s;
+    QDir().mkpath(dir);
+    QFile file(dir + u"/uploads.jsonl"_s);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) {
+        return;
+    }
+    file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    const QJsonObject entry{{u"time"_s, QDateTime::currentDateTimeUtc().toString(Qt::ISODate)},
+                            {u"link"_s, link},
+                            {u"delete_url"_s, deleteUrl},
+                            {u"expires_seconds"_s, expires}};
+    file.write(QJsonDocument(entry).toJson(QJsonDocument::Compact) + '\n');
 }
 }
 
@@ -167,7 +188,8 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
         }
     }
 
-    const QHash<QString, QString> vars{{u"filename"_s, filename}, {u"mime"_s, mime}};
+    const int expires = qMax(0, cfg.value(u"expires"_s).toInt(0));
+    const QHash<QString, QString> vars{{u"filename"_s, filename}, {u"mime"_s, mime}, {u"expires"_s, QString::number(expires)}};
 
     QUrl url = baseUrl;
     const QJsonObject queryCfg = cfg.value(u"query"_s).toObject();
@@ -176,6 +198,11 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
         for (auto it = queryCfg.begin(); it != queryCfg.end(); ++it) {
             query.addQueryItem(it.key(), expand(it.value().toString(), vars));
         }
+        url.setQuery(query);
+    }
+    if (expires > 0 && !QUrlQuery(url).hasQueryItem(u"expires"_s)) {
+        QUrlQuery query(url);
+        query.addQueryItem(u"expires"_s, QString::number(expires));
         url.setQuery(query);
     }
 
@@ -218,7 +245,9 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
 
     const QString host = url.host();
     const QString linkTemplate = cfg.value(u"link"_s).toString(u"{value}"_s);
-    connect(reply, &QNetworkReply::finished, this, [this, reply, host, response, linkTemplate, vars] {
+    const QString deletePointer = cfg.value(u"delete_pointer"_s).toString();
+    const QString deleteTemplate = cfg.value(u"delete_link"_s).toString();
+    connect(reply, &QNetworkReply::finished, this, [this, reply, host, response, linkTemplate, vars, deletePointer, deleteTemplate, expires] {
         reply->deleteLater();
         const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         const QString text = QString::fromUtf8(reply->read(MaxResponseBytes));
@@ -245,6 +274,56 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
         }
         auto allVars = vars;
         allVars.insert(u"value"_s, value);
-        Q_EMIT finished(expand(linkTemplate, allVars));
+        const QString link = expand(linkTemplate, allVars);
+
+        QString deleteUrl;
+        if (!deletePointer.isEmpty() && !deleteTemplate.isEmpty()) {
+            const QString token = extractValue(QJsonObject{{u"json_pointer"_s, deletePointer}}, text);
+            if (!token.isEmpty()) {
+                allVars.insert(u"delete"_s, token);
+                deleteUrl = expand(deleteTemplate, allVars);
+            }
+        }
+        appendHistory(link, deleteUrl, expires);
+        Q_EMIT finished(link, deleteUrl);
+    });
+}
+
+void Uploader::deleteRemote(const QString &urlString)
+{
+    QJsonObject cfg;
+    QFile file(configPath());
+    if (file.open(QIODevice::ReadOnly)) {
+        cfg = QJsonDocument::fromJson(file.readAll()).object();
+    }
+    const QUrl url(urlString);
+    if (!url.isValid() || (url.scheme() != u"http" && url.scheme() != u"https")) {
+        QMetaObject::invokeMethod(this, [this] { Q_EMIT failed(u"The delete address is not a valid http(s) URL."_s); }, Qt::QueuedConnection);
+        return;
+    }
+    QNetworkRequest request(url);
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::ManualRedirectPolicy);
+    request.setTransferTimeout(30000);
+    request.setHeader(QNetworkRequest::UserAgentHeader, u"lorgn/1.0"_s);
+    const QJsonObject headers = cfg.value(u"headers"_s).toObject();
+    for (auto it = headers.begin(); it != headers.end(); ++it) {
+        request.setRawHeader(it.key().toUtf8(), it.value().toString().toUtf8());
+    }
+    QNetworkReply *reply = m_nam->deleteResource(request);
+    const QString host = url.host();
+    connect(reply, &QNetworkReply::finished, this, [this, reply, host] {
+        reply->deleteLater();
+        const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (status >= 200 && status < 300) {
+            Q_EMIT deleted();
+        } else if (status == 0) {
+            Q_EMIT failed(u"Could not reach %1: %2"_s.arg(host, reply->errorString()));
+        } else if (status == 403) {
+            Q_EMIT failed(u"%1 refused to delete it: the delete token is wrong or already used."_s.arg(host));
+        } else if (status == 404) {
+            Q_EMIT failed(u"Nothing to delete: it is already gone or has expired."_s);
+        } else {
+            Q_EMIT failed(u"%1 answered HTTP %2 to the delete request."_s.arg(host).arg(status));
+        }
     });
 }

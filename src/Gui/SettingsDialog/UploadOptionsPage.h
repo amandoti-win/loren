@@ -52,6 +52,9 @@ private:
     QComboBox *m_responseKind;
     QLineEdit *m_responseValue;
     QLineEdit *m_link;
+    QComboBox *m_expires = nullptr;
+    QLineEdit *m_deletePointer = nullptr;
+    QLineEdit *m_deleteLink = nullptr;
     QLabel *m_pathLabel;
     QLabel *m_testResult;
     QPushButton *m_testButton;

@@ -3,5 +3,6 @@
   "main": "worker.js",
   "compatibility_date": "2026-08-01",
   "r2_buckets": [{ "binding": "FILES", "bucket_name": "shots-files" }],
-  "vars": { "MAX_MB": "90" }
+  "vars": { "MAX_MB": "90" },
+  "triggers": { "crons": ["17 * * * *"] }
 }

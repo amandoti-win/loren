@@ -84,6 +84,19 @@ UploadOptionsPage::UploadOptionsPage(QWidget *parent)
     m_responseValue->setPlaceholderText(u"/key"_s);
     m_link->setPlaceholderText(u"https://files.example.com/f/{value}"_s);
     m_link->setToolTip(i18n("Use {value} for what was read from the response, {filename} for the file name."));
+    m_expires = new QComboBox(this);
+    m_expires->addItem(i18n("Never"), 0);
+    m_expires->addItem(i18n("1 hour"), 3600);
+    m_expires->addItem(i18n("1 day"), 86400);
+    m_expires->addItem(i18n("7 days"), 604800);
+    m_expires->addItem(i18n("30 days"), 2592000);
+    m_expires->setToolTip(i18n("Sent to the server as expires=<seconds>. Your server has to support it."));
+    m_deletePointer = new QLineEdit(this);
+    m_deletePointer->setPlaceholderText(u"/delete_token"_s);
+    m_deletePointer->setToolTip(i18n("Where the server's reply holds the secret delete token. Leave empty if the server has none."));
+    m_deleteLink = new QLineEdit(this);
+    m_deleteLink->setPlaceholderText(u"https://files.example.com/f/{value}?token={delete}"_s);
+    m_deleteLink->setToolTip(i18n("Address that deletes the upload. {value} is the link value, {delete} is the delete token."));
     m_pathLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
     m_pathLabel->setWordWrap(true);
     m_testResult->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -101,6 +114,9 @@ UploadOptionsPage::UploadOptionsPage(QWidget *parent)
     form->addRow(i18n("Read link from response as:"), m_responseKind);
     form->addRow(i18n("Response value:"), m_responseValue);
     form->addRow(i18n("Link template:"), m_link);
+    form->addRow(i18n("Links expire after:"), m_expires);
+    form->addRow(i18n("Delete token from response:"), m_deletePointer);
+    form->addRow(i18n("Delete link:"), m_deleteLink);
 
     auto *layout = new QVBoxLayout(this);
     layout->addWidget(m_copyUploads);
@@ -110,7 +126,7 @@ UploadOptionsPage::UploadOptionsPage(QWidget *parent)
     layout->addStretch();
     layout->addWidget(m_pathLabel);
 
-    for (auto *edit : {m_url, m_fileField, m_authorization, m_cfId, m_cfSecret, m_responseValue, m_link}) {
+    for (auto *edit : {m_url, m_fileField, m_authorization, m_cfId, m_cfSecret, m_responseValue, m_link, m_deletePointer, m_deleteLink}) {
         connect(edit, &QLineEdit::textEdited, this, &UploadOptionsPage::markChanged);
     }
     connect(m_extraHeaders, &QPlainTextEdit::textChanged, this, [this] {
@@ -118,7 +134,7 @@ UploadOptionsPage::UploadOptionsPage(QWidget *parent)
             markChanged();
         }
     });
-    for (auto *combo : {m_method, m_body, m_responseKind}) {
+    for (auto *combo : {m_method, m_body, m_responseKind, m_expires}) {
         connect(combo, &QComboBox::activated, this, &UploadOptionsPage::markChanged);
     }
     connect(m_testButton, &QPushButton::clicked, this, &UploadOptionsPage::testUpload);
@@ -183,6 +199,15 @@ void UploadOptionsPage::reload()
     m_responseKind->setCurrentIndex(kind);
     m_responseValue->setText(value);
     m_link->setText(m_config.value(u"link"_s).toString());
+    const int expires = m_config.value(u"expires"_s).toInt(0);
+    int expiresIndex = m_expires->findData(expires);
+    if (expiresIndex < 0) {
+        m_expires->addItem(i18n("%1 seconds", expires), expires);
+        expiresIndex = m_expires->count() - 1;
+    }
+    m_expires->setCurrentIndex(expiresIndex);
+    m_deletePointer->setText(m_config.value(u"delete_pointer"_s).toString());
+    m_deleteLink->setText(m_config.value(u"delete_link"_s).toString());
 
     m_pathLabel->setText(i18n("Server settings are saved to %1 (readable only by you).", ownConfigPath())
                          + (path != ownConfigPath() && QFileInfo::exists(path) ? u"\n"_s + i18n("Currently reading %1; saving here moves it.", path) : QString()));
@@ -228,6 +253,20 @@ void UploadOptionsPage::save()
         cfg.remove(u"link"_s);
     } else {
         cfg.insert(u"link"_s, m_link->text().trimmed());
+    }
+
+    const int expires = m_expires->currentData().toInt();
+    if (expires > 0) {
+        cfg.insert(u"expires"_s, expires);
+    } else {
+        cfg.remove(u"expires"_s);
+    }
+    for (const auto &[key, edit] : {std::pair{u"delete_pointer"_s, m_deletePointer}, std::pair{u"delete_link"_s, m_deleteLink}}) {
+        if (edit->text().trimmed().isEmpty()) {
+            cfg.remove(key);
+        } else {
+            cfg.insert(key, edit->text().trimmed());
+        }
     }
 
     const QString path = ownConfigPath();

@@ -613,6 +613,21 @@ bool ExportManager::isTempFileAlreadyUsed(const QUrl &url) const
     return m_usedTempFileNames.contains(url);
 }
 
+QString ExportManager::lastDeleteUrl() const
+{
+    return m_lastDeleteUrl;
+}
+
+void ExportManager::deleteUpload(const QString &deleteUrl)
+{
+    if (!m_deleter) {
+        m_deleter = new Uploader(this);
+        connect(m_deleter, &Uploader::deleted, this, &ExportManager::uploadDeleted);
+        connect(m_deleter, &Uploader::failed, this, &ExportManager::errorMessage);
+    }
+    m_deleter->deleteRemote(deleteUrl);
+}
+
 void ExportManager::copyLinkToClipboard(const QString &link)
 {
     auto data = new QMimeData();
@@ -642,7 +657,8 @@ void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
         actions.setFlag(CopyImage, false);
         if (!m_uploader) {
             m_uploader = new Uploader(this);
-            connect(m_uploader, &Uploader::finished, this, [this](const QString &link) {
+            connect(m_uploader, &Uploader::finished, this, [this](const QString &link, const QString &deleteUrl) {
+                m_lastDeleteUrl = deleteUrl;
                 copyLinkToClipboard(link);
                 Q_EMIT imageExported(CopyImage | UserAction | LinkCopied, QUrl(link));
             });
@@ -888,7 +904,8 @@ void ExportManager::exportVideo(ExportManager::Actions actions, const QUrl &inpu
         } else {
             if (!m_videoUploader) {
                 m_videoUploader = new Uploader(this);
-                connect(m_videoUploader, &Uploader::finished, this, [this](const QString &link) {
+                connect(m_videoUploader, &Uploader::finished, this, [this](const QString &link, const QString &deleteUrl) {
+                    m_lastDeleteUrl = deleteUrl;
                     copyLinkToClipboard(link);
                     Q_EMIT videoExported(CopyPath | UserAction | LinkCopied, QUrl(link));
                 });

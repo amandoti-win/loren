@@ -396,7 +396,7 @@ SpectacleCore::SpectacleCore(QObject *parent)
         }
 
         if (actions & ExportManager::LinkCopied) {
-            viewerWindow->showLinkCopiedMessage();
+            viewerWindow->showLinkCopiedMessage(ExportManager::instance()->lastDeleteUrl());
             return;
         }
 
@@ -438,7 +438,7 @@ SpectacleCore::SpectacleCore(QObject *parent)
         }
 
         if (actions & ExportManager::LinkCopied) {
-            viewerWindow->showLinkCopiedMessage();
+            viewerWindow->showLinkCopiedMessage(ExportManager::instance()->lastDeleteUrl());
             return;
         }
 
@@ -465,6 +465,11 @@ SpectacleCore::SpectacleCore(QObject *parent)
     connect(exportManager, &ExportManager::qrCodeScanned, this, onQRCodeScanned);
 
     connect(exportManager, &ExportManager::errorMessage, this, &SpectacleCore::showErrorMessage);
+    connect(exportManager, &ExportManager::uploadDeleted, this, [] {
+        if (auto viewerWindow = ViewerWindow::instance()) {
+            viewerWindow->showUploadDeletedMessage();
+        }
+    });
 
     connect(m_annotationDocument.get(), &AnnotationDocument::repaintNeeded, m_annotationSyncTimer.get(), qOverload<>(&QTimer::start));
     connect(m_annotationSyncTimer.get(), &QTimer::timeout, this, [this] {
@@ -1229,6 +1234,11 @@ void SpectacleCore::startRecording(VideoPlatform::RecordingMode mode, bool withP
     setVideoMode(true);
     const auto &output = m_outputUrl.isLocalFile() ? videoOutputUrl() : QUrl();
     m_videoPlatform->startRecording(output, mode, {}, withPointer);
+}
+
+void SpectacleCore::deleteUpload(const QString &deleteUrl)
+{
+    ExportManager::instance()->deleteUpload(deleteUrl);
 }
 
 void SpectacleCore::finishRecording()

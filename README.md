@@ -15,6 +15,7 @@ Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 fo
 - **One-click upload.** Launch it, drag a region, and press Upload (or Enter). The image goes to your own server and the link is on your clipboard.
 - **Your own domain.** Point it at any server that accepts an upload, such as a small script or a Cloudflare Worker, and set it up in Settings > Upload. Cloudflare Access is supported. See [docs/upload-server.md](docs/upload-server.md).
 - **Region first.** Launching opens the region overlay right away.
+- **Expiring and deletable links.** Choose how long a link lasts, and delete an upload from the "link copied" message.
 - **Screen recordings too.** Finish a recording, press Upload, and the video link is on your clipboard.
 - **Runs alongside Spectacle.** It has its own name, icon and settings, so both can be installed together.
 

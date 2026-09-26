@@ -30,9 +30,13 @@ public:
     void upload(const QImage &image, const QString &filename);
     /// Same for a file on disk (a screen recording). The file is streamed, not loaded into memory.
     void uploadFile(const QString &path, const QString &filename, const QString &mime);
+    /// Sends DELETE to a delete address returned by a previous upload. Emits deleted() or failed().
+    void deleteRemote(const QString &url);
 
 Q_SIGNALS:
-    void finished(const QString &link);
+    /// deleteUrl is empty when the server did not offer a way to delete the upload.
+    void finished(const QString &link, const QString &deleteUrl);
+    void deleted();
     void failed(const QString &message);
 
 private:

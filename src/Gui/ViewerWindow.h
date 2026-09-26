@@ -37,7 +37,8 @@ public:
     void showSavedAndCopiedMessage(const QUrl &messageArgument);
     void showSavedAndLocationCopiedMessage(const QUrl &messageArgument, bool video = false);
     void showCopiedMessage();
-    void showLinkCopiedMessage();
+    void showLinkCopiedMessage(const QString &deleteUrl = {});
+    void showUploadDeletedMessage();
     void showLocationCopiedMessage();
     void showScreenshotFailedMessage(const QString &messageArgument);
     void showRecordingFailedMessage(const QString &messageArgument);
