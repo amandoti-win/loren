@@ -53,11 +53,11 @@ API as above. You need a Cloudflare account with R2 enabled. Node.js is needed f
     npx wrangler deploy
     npx wrangler secret put UPLOAD_TOKEN
 
-Screen recordings are uploaded the same way, and the Worker rejects anything over `MAX_MB` (90 by default; Cloudflare also
-caps request bodies at 100 MB on the free plan).
-
 Paste a long random token when asked (`openssl rand -base64 32` makes one) and keep a copy for Lorgn.
 The Worker is then live at `https://shots.<your-subdomain>.workers.dev`.
+
+Screen recordings are uploaded the same way, and the Worker rejects anything over `MAX_MB` (90 by default; Cloudflare also
+caps request bodies at 100 MB on the free plan).
 
 To use your own domain, which must be on your Cloudflare account, add this to `wrangler.jsonc` before deploying:
 
