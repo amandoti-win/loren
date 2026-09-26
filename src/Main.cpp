@@ -43,10 +43,10 @@ int main(int argc, char **argv)
     KAboutData aboutData(u"lorgn"_s,
                          u"Lorgn"_s,
                          QStringLiteral(SPECTACLE_VERSION),
-                         i18n("Screenshot capture and upload utility"),
+                         i18n("Instant screenshot capture with shareable links on your own domain"),
                          KAboutLicense::GPL_V3,
-                         u"(C) 2026 Lorgn contributors. Based on KDE Spectacle, (C) 2015 Boudhayan Gupta and others"_s);
-    aboutData.setOtherText(u"Based on KDE Spectacle 6.3.5."_s);
+                         u"(C) 2026 amandoti.win"_s);
+    aboutData.setOtherText(u"Fork of Spectacle 6.3.5"_s);
     aboutData.setHomepage(u"https://github.com/amandoti-win/lorgn"_s);
     aboutData.setBugAddress("");
     aboutData.addAuthor(u"Boudhayan Gupta"_s, {}, u"bgupta@kde.org"_s);
