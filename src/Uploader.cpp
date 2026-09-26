@@ -96,10 +96,13 @@ QString Uploader::configPath()
 
 void Uploader::upload(const QImage &image, const QString &filename)
 {
+    // Screenshots carry metadata such as the captured window's title and screen position.
+    // Rebuild the image from its pixels only, so none of that is published.
+    const QImage clean = QImage(image.constBits(), image.width(), image.height(), image.bytesPerLine(), image.format()).copy();
     QByteArray png;
     QBuffer buffer(&png);
     buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "PNG");
+    clean.save(&buffer, "PNG");
     buffer.close();
     start(png, QString(), filename, u"image/png"_s);
 }
