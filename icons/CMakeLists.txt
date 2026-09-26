@@ -3,7 +3,7 @@
 
 ecm_install_icons(
     ICONS
-        sc-apps-spectacle.svg
+        sc-apps-lorgn.svg
     DESTINATION ${KDE_INSTALL_ICONDIR}
     THEME hicolor
 )

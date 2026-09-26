@@ -8,6 +8,8 @@
 #include "ImageMetaData.h"
 #include "settings.h"
 #include "Uploader.h"
+#include <QProcess>
+#include <QStandardPaths>
 #include "DebugUtils.h"
 #include <kio_version.h>
 
@@ -629,6 +631,14 @@ void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
                 auto data = new QMimeData();
                 data->setText(link);
                 KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
+                // Without a clipboard manager, text we own vanishes when we quit. wl-copy keeps
+                // serving it in its own process, so hand the link over when it is available.
+                if (qEnvironmentVariableIsSet("WAYLAND_DISPLAY")) {
+                    const QString wlCopy = QStandardPaths::findExecutable(u"wl-copy"_s);
+                    if (!wlCopy.isEmpty()) {
+                        QProcess::startDetached(wlCopy, {u"--"_s, link});
+                    }
+                }
                 Q_EMIT imageExported(CopyImage | UserAction, QUrl(link));
             });
             connect(m_uploader, &Uploader::failed, this, &ExportManager::errorMessage);

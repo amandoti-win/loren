@@ -13,6 +13,7 @@ class GeneralOptionsPage;
 class ImageSaveOptionsPage;
 class VideoSaveOptionsPage;
 class ShortcutsOptionsPage;
+class UploadOptionsPage;
 
 class SettingsDialog : public KConfigDialog
 {
@@ -36,6 +37,7 @@ private:
     ImageSaveOptionsPage *const m_imagesPage;
     VideoSaveOptionsPage *const m_videosPage;
     ShortcutsOptionsPage *const m_shortcutsPage;
+    UploadOptionsPage *const m_uploadPage;
 };
 
 #endif // SETTINGSDIALOG_H

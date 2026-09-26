@@ -1,22 +1,18 @@
 # install the .desktop and rc files in the correct place
 
-configure_file(org.kde.spectacle.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/org.kde.spectacle.desktop)
+configure_file(win.amandoti.lorgn.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.lorgn.desktop)
 install(
-    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.spectacle.desktop
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.lorgn.desktop
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
 
 install( DIRECTORY DESTINATION "${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel" )
 install(
-    CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E create_symlink \"${KDE_INSTALL_FULL_APPDIR}/org.kde.spectacle.desktop\" \"\$ENV{DESTDIR}${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.kde.spectacle.desktop\")"
+    CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E create_symlink \"${KDE_INSTALL_FULL_APPDIR}/win.amandoti.lorgn.desktop\" \"\$ENV{DESTDIR}${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/win.amandoti.lorgn.desktop\")"
 )
 
 install(
-    FILES spectacle.notifyrc
+    FILES lorgn.notifyrc
     DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
 )
 
-install(
-    FILES org.kde.spectacle.appdata.xml
-    DESTINATION ${KDE_INSTALL_METAINFODIR}
-)

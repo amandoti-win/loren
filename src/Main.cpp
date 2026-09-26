@@ -38,20 +38,24 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
 
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("spectacle"));
-    QCoreApplication::setOrganizationDomain(u"org.kde"_s);
+    QCoreApplication::setOrganizationDomain(u"amandoti.win"_s);
 
-    KAboutData aboutData(u"spectacle"_s,
-                         i18n("Spectacle"),
+    KAboutData aboutData(u"lorgn"_s,
+                         u"Lorgn"_s,
                          QStringLiteral(SPECTACLE_VERSION),
-                         i18n("KDE Screenshot Utility"),
-                         KAboutLicense::GPL_V2,
-                         i18n("(C) 2015 Boudhayan Gupta"));
+                         i18n("Screenshot utility with upload, based on KDE Spectacle"),
+                         KAboutLicense::GPL_V3,
+                         u"(C) 2026 Lorgn contributors. Based on KDE Spectacle, (C) 2015 Boudhayan Gupta and others"_s);
+    aboutData.setOtherText(u"Based on KDE Spectacle 6.3.5."_s);
+    aboutData.setHomepage(u"https://github.com/amandoti-win/lorgn"_s);
+    aboutData.setBugAddress("");
     aboutData.addAuthor(u"Boudhayan Gupta"_s, {}, u"bgupta@kde.org"_s);
     aboutData.addAuthor(u"David Redondo"_s, {}, u"kde@david-redondo.de"_s);
     aboutData.addAuthor(u"Noah Davis"_s, {}, u"noahadvs@gmail.com"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    aboutData.setDesktopFileName(u"win.amandoti.lorgn"_s);
     KAboutData::setApplicationData(aboutData);
-    app.setWindowIcon(QIcon::fromTheme(u"spectacle"_s));
+    app.setWindowIcon(QIcon::fromTheme(u"lorgn"_s));
 
     KCrash::initialize();
 
@@ -132,7 +136,7 @@ int main(int argc, char **argv)
                          Q_EMIT dbusAdapter->RecordingTaken(url.toLocalFile());
                      });
     QDBusConnection::sessionBus().registerObject(u"/"_s, spectacleCore);
-    QDBusConnection::sessionBus().registerService(u"org.kde.Spectacle"_s);
+    QDBusConnection::sessionBus().registerService(u"win.amandoti.Lorgn"_s);
 
     // fire it up
     spectacleCore->activate(app.arguments(), QDir::currentPath());

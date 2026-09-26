@@ -1,0 +1,7 @@
+[Unit]
+Description=Lorgn screenshot capture utility
+
+[Service]
+ExecStart=@KDE_INSTALL_FULL_BINDIR@/lorgn --dbus
+BusName=win.amandoti.Lorgn
+KillMode=process

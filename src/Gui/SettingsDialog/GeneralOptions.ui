@@ -89,17 +89,7 @@
      </item>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QCheckBox" name="kcfg_copyUploadsLink">
-     <property name="toolTip">
-      <string>When you click Copy, upload the image to your server and copy the link instead of the image. Needs an upload config file.</string>
-     </property>
-     <property name="text">
-      <string>Copy button uploads and copies the link</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <spacer name="verticalSpacer_1">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -115,21 +105,21 @@
      </property>
     </spacer>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="KTitleWidget" name="runningTitle">
      <property name="text">
       <string>While Spectacle is running</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="printKeyActionLabel">
      <property name="text">
       <string>Press screenshot key to:</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="6" column="1">
     <widget class="QComboBox" name="kcfg_printKeyRunningAction">
      <item>
       <property name="text">
@@ -148,7 +138,7 @@
      </item>
     </widget>
    </item>
-   <item row="8" column="0" colspan="2">
+   <item row="7" column="0" colspan="2">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -164,49 +154,49 @@
      </property>
     </spacer>
    </item>
-   <item row="9" column="0" colspan="2">
+   <item row="8" column="0" colspan="2">
     <widget class="KTitleWidget" name="regionTitle">
      <property name="text">
       <string>Rectangular Region Selection</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="generalLabel">
      <property name="text">
       <string>General:</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
+   <item row="9" column="1">
     <widget class="QCheckBox" name="kcfg_useLightMaskColor">
      <property name="text">
       <string>Use light background</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="10" column="1">
     <widget class="QCheckBox" name="kcfg_useReleaseToCapture">
      <property name="text">
       <string>Accept on click-and-release</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="1">
+   <item row="11" column="1">
     <widget class="QCheckBox" name="kcfg_showCaptureInstructions">
      <property name="text">
       <string>Show capture instructions</string>
      </property>
     </widget>
    </item>
-   <item row="13" column="0">
+   <item row="12" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Show magnifier:</string>
      </property>
     </widget>
    </item>
-   <item row="13" column="1">
+   <item row="12" column="1">
     <widget class="QComboBox" name="kcfg_showMagnifier">
      <item>
       <property name="text">
@@ -225,14 +215,14 @@
      </item>
     </widget>
    </item>
-   <item row="14" column="0">
+   <item row="13" column="0">
     <widget class="QLabel" name="rememberLabel">
      <property name="text">
       <string>Remember selected area:</string>
      </property>
     </widget>
    </item>
-   <item row="14" column="1">
+   <item row="13" column="1">
     <widget class="QComboBox" name="kcfg_rememberSelectionRect">
      <item>
       <property name="text">
@@ -264,7 +254,6 @@
   <tabstop>kcfg_launchAction</tabstop>
   <tabstop>kcfg_autoSaveImage</tabstop>
   <tabstop>kcfg_clipboardGroup</tabstop>
-  <tabstop>kcfg_copyUploadsLink</tabstop>
   <tabstop>kcfg_printKeyRunningAction</tabstop>
   <tabstop>kcfg_useLightMaskColor</tabstop>
   <tabstop>kcfg_useReleaseToCapture</tabstop>

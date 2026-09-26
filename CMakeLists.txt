@@ -1,10 +1,10 @@
 cmake_minimum_required (VERSION 3.16 FATAL_ERROR)
 # Managed by release script
-set(PROJECT_VERSION "6.3.5")
+set(PROJECT_VERSION "0.1.0")
 set(SPECTACLE_VERSION ${PROJECT_VERSION})
 
 # Spectacle project
-project(Spectacle VERSION ${SPECTACLE_VERSION})
+project(Lorgn VERSION ${SPECTACLE_VERSION})
 
 # minimum requirements
 set(PROJECT_DEP_VERSION "6.3.5")

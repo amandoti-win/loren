@@ -11,6 +11,7 @@
 #include "ImageSaveOptionsPage.h"
 #include "VideoSaveOptionsPage.h"
 #include "ShortcutsOptionsPage.h"
+#include "UploadOptionsPage.h"
 #include "settings.h"
 
 #include <QFontDatabase>
@@ -29,13 +30,18 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     , m_imagesPage(new ImageSaveOptionsPage(this))
     , m_videosPage(new VideoSaveOptionsPage(this))
     , m_shortcutsPage(new ShortcutsOptionsPage(this))
+    , m_uploadPage(new UploadOptionsPage(this))
 {
     setFaceType(KPageDialog::List);
-    addPage(m_generalPage, Settings::self(), i18nc("Settings category", "General"), "spectacle"_L1);
+    addPage(m_generalPage, Settings::self(), i18nc("Settings category", "General"), "lorgn"_L1);
     addPage(m_imagesPage, Settings::self(), i18nc("Settings category", "Image Saving"), "image-x-generic"_L1);
     addPage(m_videosPage, Settings::self(), i18nc("Settings category", "Video Saving"), "video-x-generic"_L1);
+    addPage(m_uploadPage, Settings::self(), i18nc("Settings category", "Upload"), "cloud-upload"_L1);
     addPage(m_shortcutsPage, i18nc("Settings category", "Shortcuts"), "preferences-desktop-keyboard"_L1);
     connect(m_shortcutsPage, &ShortcutsOptionsPage::shortCutsChanged, this, [this] {
+        updateButtons();
+    });
+    connect(m_uploadPage, &UploadOptionsPage::changed, this, [this] {
         updateButtons();
     });
     connect(this, &KConfigDialog::currentPageChanged, this, &SettingsDialog::updateButtons);
@@ -51,6 +57,7 @@ QSize SettingsDialog::sizeHint() const
     sh = sh.expandedTo(m_imagesPage->sizeHint());
     sh = sh.expandedTo(m_videosPage->sizeHint());
     sh = sh.expandedTo(m_shortcutsPage->sizeHint());
+    sh = sh.expandedTo(m_uploadPage->sizeHint());
     sh.rheight() += headerSize.height() + footerSize.height()
                  + style()->pixelMetric(QStyle::PM_LayoutVerticalSpacing) * 2;
     sh = KConfigDialog::sizeHint().expandedTo(sh);
@@ -69,7 +76,7 @@ void SettingsDialog::showEvent(QShowEvent *event)
 
 bool SettingsDialog::hasChanged()
 {
-    return m_shortcutsPage->isModified() || KConfigDialog::hasChanged();
+    return m_shortcutsPage->isModified() || m_uploadPage->isModified() || KConfigDialog::hasChanged();
 }
 
 bool SettingsDialog::isDefault()
@@ -81,12 +88,14 @@ void SettingsDialog::updateSettings()
 {
     KConfigDialog::updateSettings();
     m_shortcutsPage->saveChanges();
+    m_uploadPage->save();
 }
 
 void SettingsDialog::updateWidgets()
 {
     KConfigDialog::updateWidgets();
     m_shortcutsPage->resetChanges();
+    m_uploadPage->reload();
 }
 
 void SettingsDialog::updateWidgetsDefault()

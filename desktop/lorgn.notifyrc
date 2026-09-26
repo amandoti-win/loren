@@ -1,0 +1,15 @@
+[Global]
+IconName=lorgn
+DesktopEntry=win.amandoti.lorgn
+Name=Lorgn
+Comment=Screenshot Capture Utility
+
+[Event/newScreenshotSaved]
+Name=New Screenshot Saved
+Comment=A new screenshot was captured and saved
+Action=Popup
+
+[Event/recordingSaved]
+Name=Recording Saved
+Comment=A recording was captured and saved
+Action=Popup

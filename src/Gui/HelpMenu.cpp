@@ -40,6 +40,12 @@ HelpMenu::HelpMenu(QWidget* parent)
     , kHelpMenu(new KHelpMenu(parent, KAboutData::applicationData(), true))
 {
     addActions(kHelpMenu->menu()->actions());
+    // Lorgn is not a KDE project: no KDE bug tracker and no About KDE.
+    for (auto id : {KHelpMenu::menuReportBug, KHelpMenu::menuAboutKDE}) {
+        if (auto *action = kHelpMenu->action(id)) {
+            removeAction(action);
+        }
+    }
     connect(this, &QMenu::triggered, this, &HelpMenu::onTriggered);
 }
 
