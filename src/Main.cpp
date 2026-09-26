@@ -37,6 +37,23 @@ int main(int argc, char **argv)
     QIcon::setFallbackThemeName(u"breeze"_s);
     QApplication app(argc, argv);
 
+    // Lorgn's own accent is oxblood. It only replaces Plasma's stock blue highlight, so themes and
+    // accent colours the user chose themselves are left alone.
+    {
+        QPalette palette = app.palette();
+        const QColor stockBlue(0x3d, 0xae, 0xe9);
+        if (palette.color(QPalette::Active, QPalette::Highlight) == stockBlue) {
+            const bool dark = palette.color(QPalette::Window).lightness() < 128;
+            const QColor accent = dark ? QColor(0xb8, 0x3a, 0x5a) : QColor(0x7a, 0x1a, 0x34);
+            for (auto group : {QPalette::Active, QPalette::Inactive}) {
+                palette.setColor(group, QPalette::Highlight, accent);
+                palette.setColor(group, QPalette::Accent, accent);
+                palette.setColor(group, QPalette::HighlightedText, Qt::white);
+            }
+            app.setPalette(palette);
+        }
+    }
+
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("spectacle"));
     QCoreApplication::setOrganizationDomain(u"amandoti.win"_s);
 

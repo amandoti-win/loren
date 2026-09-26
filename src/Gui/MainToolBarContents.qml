@@ -67,6 +67,8 @@ ButtonGrid {
     // or at least not elegantly.
     ToolButton {
         visible: !SpectacleCore.videoMode
+        // The primary action uses the theme's accent colour when it uploads.
+        highlighted: Settings.copyUploadsLink
         icon.name: Settings.copyUploadsLink ? "cloud-upload" : "edit-copy"
         text: Settings.copyUploadsLink ? i18n("Upload") : i18n("Copy")
         onClicked: contextWindow.copyImage()
