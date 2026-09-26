@@ -93,10 +93,10 @@ UploadOptionsPage::UploadOptionsPage(QWidget *parent)
     m_expires->setToolTip(i18n("Sent to the server as expires=<seconds>. Your server has to support it."));
     m_deletePointer = new QLineEdit(this);
     m_deletePointer->setPlaceholderText(u"/delete_token"_s);
-    m_deletePointer->setToolTip(i18n("Where the server's reply holds the secret delete token. Leave empty if the server has none."));
+    m_deletePointer->setToolTip(i18n("Where the server's reply holds the secret delete token. Leave empty if the server needs no token, for example when it is behind a login."));
     m_deleteLink = new QLineEdit(this);
     m_deleteLink->setPlaceholderText(u"https://files.example.com/f/{value}?token={delete}"_s);
-    m_deleteLink->setToolTip(i18n("Address that deletes the upload. {value} is the link value, {delete} is the delete token."));
+    m_deleteLink->setToolTip(i18n("Address that deletes the upload. {value} is the link value and {delete} the delete token, if you set one. Leave empty for no Delete button."));
     m_pathLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
     m_pathLabel->setWordWrap(true);
     m_testResult->setTextInteractionFlags(Qt::TextSelectableByMouse);

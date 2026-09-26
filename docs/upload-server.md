@@ -146,7 +146,7 @@ For Access, put `CF-Access-Client-Id` and `CF-Access-Client-Secret` in `headers`
 | `link` | `{value}` | template for the final link |
 | `timeout` | `300` | seconds |
 | `expires` | `0` | seconds until the server should delete the upload; sent as `expires=<seconds>`. `0` means never. Also available as `{expires}` in `query` and `headers` |
-| `delete_pointer` | none | JSON pointer to the delete token in the server's reply |
+| `delete_pointer` | none | JSON pointer to the delete token in the server's reply. Leave it out if the server needs no token, for example one behind a login such as Cloudflare Access; then `delete_link` is used as it is |
 | `delete_link` | none | template for the delete address; `{value}` is the link value and `{delete}` is the delete token |
 
 `query` and `headers` values and `link` can use `{filename}` and `{mime}`; `link` can also use `{value}`, which is what

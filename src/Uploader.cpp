@@ -277,11 +277,16 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
         const QString link = expand(linkTemplate, allVars);
 
         QString deleteUrl;
-        if (!deletePointer.isEmpty() && !deleteTemplate.isEmpty()) {
-            const QString token = extractValue(QJsonObject{{u"json_pointer"_s, deletePointer}}, text);
-            if (!token.isEmpty()) {
-                allVars.insert(u"delete"_s, token);
+        if (!deleteTemplate.isEmpty()) {
+            if (deletePointer.isEmpty()) {
+                // Servers protected by a login, such as Cloudflare Access, need no delete token.
                 deleteUrl = expand(deleteTemplate, allVars);
+            } else {
+                const QString token = extractValue(QJsonObject{{u"json_pointer"_s, deletePointer}}, text);
+                if (!token.isEmpty()) {
+                    allVars.insert(u"delete"_s, token);
+                    deleteUrl = expand(deleteTemplate, allVars);
+                }
             }
         }
         appendHistory(link, deleteUrl, expires);
