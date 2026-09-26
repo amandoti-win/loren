@@ -18,8 +18,9 @@
         <choice name="TakeFullscreenScreenshot"></choice>
         <choice name="UseLastUsedCapturemode"></choice>
         <choice name="DoNotTakeScreenshot"></choice>
+        <choice name="TakeRegionScreenshot"></choice>
         </choices>
-        <default>UseLastUsedCapturemode</default>
+        <default>TakeRegionScreenshot</default>
     </entry>
     <entry name="printKeyRunningAction" type="Enum">
         <label>What should happen if print key is pressed when Spectacle is already running</label>

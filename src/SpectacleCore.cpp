@@ -721,6 +721,9 @@ void SpectacleCore::activate(const QStringList &arguments, const QString &workin
         grabMode = GrabMode::WindowUnderCursor;
     } else if (Settings::launchAction() == Settings::UseLastUsedCapturemode) {
         grabMode = toGrabMode(CaptureMode(Settings::captureMode()), transientOnly);
+    } else if (Settings::launchAction() == Settings::TakeRegionScreenshot) {
+        // Lorgn's default: launching goes straight to the region overlay.
+        grabMode = GrabMode::PerScreenImageNative;
     }
 
     using RecordingMode = VideoPlatform::RecordingMode;
