@@ -4,6 +4,7 @@ SET(FILENAME_TEST_SRCS
     FilenameTest.cpp
     ../src/ShortcutActions.cpp
     ../src/ExportManager.cpp
+    ../src/Uploader.cpp
     ../src/Platforms/ImagePlatform.cpp
     ../src/Platforms/VideoPlatform.cpp
 )

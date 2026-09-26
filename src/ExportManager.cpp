@@ -7,6 +7,7 @@
 #include "ExportManager.h"
 #include "ImageMetaData.h"
 #include "settings.h"
+#include "Uploader.h"
 #include "DebugUtils.h"
 #include <kio_version.h>
 
@@ -618,6 +619,23 @@ void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
     }
 
     bool success = false;
+    if (actions & CopyImage && actions & UserAction && Settings::copyUploadsLink()) {
+        // Copy uploads to the user's server and puts the link on the clipboard instead of the image.
+        // imageExported is emitted only once the upload is done so the app can't quit mid-upload.
+        actions.setFlag(CopyImage, false);
+        if (!m_uploader) {
+            m_uploader = new Uploader(this);
+            connect(m_uploader, &Uploader::finished, this, [this](const QString &link) {
+                auto data = new QMimeData();
+                data->setText(link);
+                KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
+                Q_EMIT imageExported(CopyImage | UserAction, QUrl(link));
+            });
+            connect(m_uploader, &Uploader::failed, this, &ExportManager::errorMessage);
+        }
+        const QString name = formattedFilename(Settings::imageFilenameTemplate(), m_timestamp, ImageMetaData::windowTitle(m_saveImage)) + u".png"_s;
+        m_uploader->upload(scaledImageFromSubGeometry(m_saveImage), name);
+    }
     if (actions & SaveAs) {
         QStringList supportedFilters;
 

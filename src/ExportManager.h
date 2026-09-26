@@ -16,6 +16,7 @@ class QPrinter;
 #include <QUrl>
 
 class QTemporaryDir;
+class Uploader;
 
 class ExportManager : public QObject
 {
@@ -159,6 +160,7 @@ private:
     QImage m_saveImage;
     QDateTime m_timestamp;
     QUrl m_tempFile;
+    Uploader *m_uploader = nullptr;
     std::unique_ptr<QLockFile> m_tempDirLock;
     std::unique_ptr<QTemporaryDir> m_tempDir;
     QList<QUrl> m_usedTempFileNames;

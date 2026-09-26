@@ -26,6 +26,7 @@ target_sources(spectacle PRIVATE
     CommandLineOptions.cpp
     RecordingModeModel.cpp
     ExportManager.cpp
+    Uploader.cpp
     Geometry.cpp
     PlasmaVersion.cpp
     ScreenShotEffect.cpp
@@ -104,6 +105,7 @@ target_include_directories(spectacle PUBLIC ${OpenCV_INCLUDE_DIRS})
 
 target_link_libraries(spectacle PRIVATE
     Qt::Concurrent
+    Qt::Network
     Qt::DBus
     Qt::PrintSupport
     Qt::Qml
