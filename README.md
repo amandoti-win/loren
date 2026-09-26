@@ -39,6 +39,9 @@ the build directory is refused ("The process is not authorized to take a screens
 
 ## Upload server
 
+Lorgn needs a server to upload to. [docs/upload-server.md](docs/upload-server.md) covers running one yourself
+(`examples/server.py`) or on Cloudflare (`examples/cloudflare-worker/`), and connecting it in Settings > Upload.
+
 The server must accept the image over HTTP and return something the link can be built from.
 Example `~/.config/lorgn/upload.json`:
 
