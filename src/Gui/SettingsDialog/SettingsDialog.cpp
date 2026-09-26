@@ -35,6 +35,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     setFaceType(KPageDialog::List);
     addPage(m_generalPage, Settings::self(), i18nc("Settings category", "General"), "lorgn"_L1);
     addPage(m_imagesPage, Settings::self(), i18nc("Settings category", "Image Saving"), "image-x-generic"_L1);
+    addPage(m_videosPage, Settings::self(), i18nc("Settings category", "Video Saving"), "video-x-generic"_L1);
     addPage(m_uploadPage, Settings::self(), i18nc("Settings category", "Upload"), "cloud-upload"_L1);
     addPage(m_shortcutsPage, i18nc("Settings category", "Shortcuts"), "preferences-desktop-keyboard"_L1);
     connect(m_shortcutsPage, &ShortcutsOptionsPage::shortCutsChanged, this, [this] {
