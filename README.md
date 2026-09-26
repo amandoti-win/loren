@@ -1,8 +1,23 @@
-<p align="center"><img src="icons/sc-apps-lorgn.svg" width="128" alt="Lorgn"></p>
+<div align="center">
+
+<img src="icons/sc-apps-lorgn.svg" width="128" alt="Lorgn">
 
 # Lorgn
 
 Instant screenshot capture with shareable links on your own domain.
+
+</div>
+
+Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 for KDE Plasma, pronounced like "lord" with an n.
+
+## What sets it apart
+
+- **One-click upload.** Launch it, drag a region, and press Upload (or Enter). The image goes to your own server and the link is on your clipboard.
+- **Your own domain.** Point it at any server that accepts an upload, such as a small script or a Cloudflare Worker, and set it up in Settings > Upload. Cloudflare Access is supported. See [docs/upload-server.md](docs/upload-server.md).
+- **Region first.** Launching opens the region overlay right away.
+- **Runs alongside Spectacle.** It has its own name, icon and settings, and sets no global shortcuts.
+
+Everything else is Spectacle.
 
 ## Credits and license
 
