@@ -26,6 +26,13 @@ Needs Qt 6.7+ and KDE Frameworks 6.10+ (Debian 13 has both).
     cmake --build build -j$(nproc)
     cmake --install build
 
+With a per-user prefix such as `~/.local`, systemd does not look in `~/.local/lib/systemd/user`, so starting Lorgn
+from the app menu or dock fails ("Unit app-win.amandoti.lorgn.service not found"). Copy the unit to where systemd looks:
+
+    mkdir -p ~/.config/systemd/user
+    cp ~/.local/lib/systemd/user/app-win.amandoti.lorgn.service ~/.config/systemd/user/
+    systemctl --user daemon-reload
+
 On Wayland, KWin only lets an app take screenshots if it is listed in an installed desktop file
 that names the restricted interface. The install step provides that file. A binary run straight from
 the build directory is refused ("The process is not authorized to take a screenshot").
