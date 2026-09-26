@@ -138,7 +138,6 @@ add_subdirectory(src)
 add_subdirectory(dbus)
 add_subdirectory(desktop)
 add_subdirectory(icons)
-add_subdirectory(kconf_update)
 add_subdirectory(tests)
 
 ki18n_install(po)
