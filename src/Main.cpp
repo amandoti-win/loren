@@ -48,10 +48,12 @@ int main(int argc, char **argv)
                          u"(C) 2026 amandoti.win"_s);
     aboutData.setOtherText(u"Fork of Spectacle 6.3.5"_s);
     aboutData.setHomepage(u"https://github.com/amandoti-win/lorgn"_s);
-    aboutData.setBugAddress("");
-    aboutData.addAuthor(u"Boudhayan Gupta"_s, {}, u"bgupta@kde.org"_s);
-    aboutData.addAuthor(u"David Redondo"_s, {}, u"kde@david-redondo.de"_s);
-    aboutData.addAuthor(u"Noah Davis"_s, {}, u"noahadvs@gmail.com"_s);
+    aboutData.addAuthor(u"amandoti.win"_s, u"Lorgn"_s, {}, u"https://github.com/amandoti-win/lorgn"_s);
+    aboutData.addAuthor(u"Boudhayan Gupta"_s, u"Spectacle"_s, u"bgupta@kde.org"_s);
+    aboutData.addAuthor(u"David Redondo"_s, u"Spectacle"_s, u"kde@david-redondo.de"_s);
+    aboutData.addAuthor(u"Noah Davis"_s, u"Spectacle"_s, u"noahadvs@gmail.com"_s);
+    aboutData.setCustomAuthorText(u"Report bugs at https://github.com/amandoti-win/lorgn/issues"_s,
+                                  u"Report bugs at <a href=\"https://github.com/amandoti-win/lorgn/issues\">github.com/amandoti-win/lorgn/issues</a>"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     aboutData.setOrganizationDomain("amandoti.win");
     aboutData.setDesktopFileName(u"win.amandoti.lorgn"_s);
