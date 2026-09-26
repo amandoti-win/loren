@@ -1,3 +1,5 @@
+<p align="center"><img src="icons/sc-apps-lorgn.svg" width="128" alt="Lorgn"></p>
+
 # Lorgn
 
 Instant screenshot capture with shareable links on your own domain.
