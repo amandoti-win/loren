@@ -90,11 +90,6 @@ VideoPlatformPtr loadVideoPlatform()
     if (auto platform = getForcedVideoPlatform()) {
         return platform;
     }
-    if (KWindowSystem::isPlatformWayland()) {
-        return std::make_unique<VideoPlatformWayland>();
-    }
-    if (KWindowSystem::isPlatformX11()) {
-        return std::make_unique<VideoPlatformNull>(i18nc("@info", "Screen recording is not available on X11."));
-    }
-    return std::make_unique<VideoPlatformNull>();
+    // Lorgn is a screenshot tool: screen recording is switched off.
+    return std::make_unique<VideoPlatformNull>(i18nc("@info", "Lorgn does not record video."));
 }

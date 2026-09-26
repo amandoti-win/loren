@@ -515,7 +515,12 @@ void SelectionEditor::keyPressEvent(QQuickItem *item, QKeyEvent *event)
     switch (event->key()) {
     case Qt::Key_Return:
     case Qt::Key_Enter:
-        acceptSelection();
+        // Enter does what the Copy/Upload button does when uploading is on.
+        if (Settings::copyUploadsLink()) {
+            acceptSelection(ExportManager::CopyImage | ExportManager::UserAction);
+        } else {
+            acceptSelection();
+        }
         event->accept();
         break;
     case Qt::Key_Up:

@@ -67,8 +67,8 @@ ButtonGrid {
     // or at least not elegantly.
     ToolButton {
         visible: !SpectacleCore.videoMode
-        icon.name: "edit-copy"
-        text: i18n("Copy")
+        icon.name: Settings.copyUploadsLink ? "cloud-upload" : "edit-copy"
+        text: Settings.copyUploadsLink ? i18n("Upload") : i18n("Copy")
         onClicked: contextWindow.copyImage()
     }
 
