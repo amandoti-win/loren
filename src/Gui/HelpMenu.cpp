@@ -40,8 +40,10 @@ HelpMenu::HelpMenu(QWidget* parent)
     , kHelpMenu(new KHelpMenu(parent, KAboutData::applicationData(), true))
 {
     addActions(kHelpMenu->menu()->actions());
-    // Lorgn is not a KDE project: no KDE bug tracker and no About KDE.
-    for (auto id : {KHelpMenu::menuReportBug, KHelpMenu::menuAboutKDE}) {
+    // Only "Switch Language" and "About Lorgn" stay: no handbook, no What's This (the app has
+    // no help content for it), no bug tracker, no About KDE.
+    for (auto id : {KHelpMenu::menuHelpContents, KHelpMenu::menuWhatsThis, KHelpMenu::menuReportBug,
+                    KHelpMenu::menuAboutKDE, KHelpMenu::menuDonate}) {
         if (auto *action = kHelpMenu->action(id)) {
             removeAction(action);
         }
@@ -56,7 +58,7 @@ HelpMenu *HelpMenu::instance()
 
 void HelpMenu::showAppHelp()
 {
-    kHelpMenu->appHelpActivated();
+    // No handbook in Lorgn.
 }
 
 void HelpMenu::onTriggered(QAction *action)

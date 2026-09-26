@@ -14,7 +14,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="launchActionSpectacleLabel">
      <property name="text">
-      <string>When launching Spectacle:</string>
+      <string>When launching Lorgn:</string>
      </property>
     </widget>
    </item>
@@ -113,7 +113,7 @@
    <item row="5" column="0" colspan="2">
     <widget class="KTitleWidget" name="runningTitle">
      <property name="text">
-      <string>While Spectacle is running</string>
+      <string>While Lorgn is running</string>
      </property>
     </widget>
    </item>
@@ -133,12 +133,12 @@
      </item>
      <item>
       <property name="text">
-       <string>Open a new Spectacle window</string>
+       <string>Open a new Lorgn window</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Return focus to Spectacle</string>
+       <string>Return focus to Lorgn</string>
       </property>
      </item>
     </widget>
@@ -241,7 +241,7 @@
      </item>
      <item>
       <property name="text">
-       <string>Until Spectacle is closed</string>
+       <string>Until Lorgn is closed</string>
       </property>
      </item>
     </widget>

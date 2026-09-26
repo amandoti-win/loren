@@ -248,12 +248,12 @@ SpectacleCore::SpectacleCore(QObject *parent)
             s_systemTrayIcon->setStatus(KStatusNotifierItem::Active);
             s_systemTrayIcon->setCategory(KStatusNotifierItem::SystemServices);
             s_systemTrayIcon->setToolTipTitle(i18nc("@info:tooltip title for recording tray icon", //
-                                                    "Spectacle is Recording"));
+                                                    "Lorgn is Recording"));
             s_systemTrayIcon->setStandardActionsEnabled(false);
             connect(s_systemTrayIcon.get(), &KStatusNotifierItem::activateRequested, this, [] {
                 SpectacleCore::instance()->finishRecording();
             });
-            const auto messageTitle = i18nc("recording notification title", "Spectacle is Recording");
+            const auto messageTitle = i18nc("recording notification title", "Lorgn is Recording");
             const auto messageBody = i18nc("recording notification message", "Click the system tray icon to finish recording");
             auto notification = new KNotification(u"notification"_s, KNotification::CloseOnTimeout | KNotification::DefaultEvent, this);
             notification->setTitle(messageTitle);
@@ -272,7 +272,7 @@ SpectacleCore::SpectacleCore(QObject *parent)
             notification->sendEvent();
             if (!QMovie::supportedFormats().contains("webp"_ba)) {
                 const auto messageTitle = i18nc("missing webp support notification title", "WebP support is missing.");
-                const auto messageBody = i18nc("missing webp support notification message", "Please install Qt Image Formats to get animated system tray icons for Spectacle, and then report this packaging issue to your distributor.");
+                const auto messageBody = i18nc("missing webp support notification message", "Please install Qt Image Formats to get animated system tray icons for Lorgn, and then report this packaging issue to your distributor.");
                 s_systemTrayIcon->showMessage(messageTitle, messageBody, u"dialog-warning"_s, 4000);
                 s_systemTrayIcon->setIconByName(u"media-record"_s);
                 return;
@@ -308,10 +308,10 @@ SpectacleCore::SpectacleCore(QObject *parent)
             });
             startedAnimation->start();
         } else if (state == VideoPlatform::RecordingState::Rendering && s_systemTrayIcon) {
-            const auto messageTitle = i18nc("recording notification title", "Spectacle is Finishing the Recording");
+            const auto messageTitle = i18nc("recording notification title", "Lorgn is Finishing the Recording");
             const auto messageBody = i18nc("recording notification message", "Please wait");
             s_systemTrayIcon->setToolTipTitle(i18nc("@info:tooltip title for rendering tray icon", //
-                                                    "Spectacle is Finishing the Recording"));
+                                                    "Lorgn is Finishing the Recording"));
             auto subtitle = i18nc("@info:tooltip subtitle for rendering tray icon", //
                                   "Time recorded: %1\n" //
                                   "Click to stop rendering early (this will lose data)",

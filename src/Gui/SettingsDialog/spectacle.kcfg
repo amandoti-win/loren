@@ -23,7 +23,7 @@
         <default>TakeRegionScreenshot</default>
     </entry>
     <entry name="printKeyRunningAction" type="Enum">
-        <label>What should happen if print key is pressed when Spectacle is already running</label>
+        <label>What should happen if print key is pressed when Lorgn is already running</label>
         <choices>
         <choice name="TakeNewScreenshot"></choice>
         <choice name="StartNewInstance"></choice>

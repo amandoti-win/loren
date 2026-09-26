@@ -188,11 +188,11 @@ void removeUnlockedDirs(const QStringList &oldDirs)
 const QTemporaryDir *ExportManager::temporaryDir()
 {
     if (!m_tempDir) {
-        // Cleanup Spectacle's temp dirs after startup instead of while quitting.
+        // Cleanup Lorgn's temp dirs after startup instead of while quitting.
         const auto filters = QDir::Filter::Dirs | QDir::NoDotAndDotDot | QDir::CaseSensitive | QDir::NoSymLinks;
         // Get old dirs before the async stuff to avoid race conditions when making the new dir.
-        const auto oldDirs = QDir::temp().entryList({u"Spectacle.??????"_s}, filters);
-        m_tempDir = std::make_unique<QTemporaryDir>(QDir::tempPath() + u"/Spectacle.XXXXXX"_s);
+        const auto oldDirs = QDir::temp().entryList({u"Lorgn.??????"_s}, filters);
+        m_tempDir = std::make_unique<QTemporaryDir>(QDir::tempPath() + u"/Lorgn.XXXXXX"_s);
         m_tempDir->setAutoRemove(false);
         if (m_tempDir->isValid()) {
             m_tempDirLock = std::make_unique<QLockFile>(m_tempDir->filePath(u"lockfile"_s));

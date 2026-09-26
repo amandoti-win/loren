@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     KAboutData aboutData(u"lorgn"_s,
                          u"Lorgn"_s,
                          QStringLiteral(SPECTACLE_VERSION),
-                         i18n("Screenshot utility with upload, based on KDE Spectacle"),
+                         i18n("Screenshot capture and upload utility"),
                          KAboutLicense::GPL_V3,
                          u"(C) 2026 Lorgn contributors. Based on KDE Spectacle, (C) 2015 Boudhayan Gupta and others"_s);
     aboutData.setOtherText(u"Based on KDE Spectacle 6.3.5."_s);
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
     // We currently don't support desktop environments besides KDE Plasma on Wayland
     // because we have to rely on KWin's DBus API.
     if (KWindowSystem::isPlatformWayland() && !ScreenShotEffect::isLoaded()) {
-        auto message = i18n("On Wayland, Spectacle requires KDE Plasma's KWin compositor, which does not seem to be available. Use Spectacle on KDE Plasma, or use a different screenshot tool.");
+        auto message = i18n("On Wayland, Lorgn requires the KWin compositor, which does not seem to be available. Use Lorgn with KWin, or use a different screenshot tool.");
         qWarning().noquote() << message;
         if (commandLineParser.isSet(CommandLineOptions::self()->background)
             || commandLineParser.isSet(CommandLineOptions::self()->dbus)) {

@@ -120,7 +120,7 @@ OptionsMenu::OptionsMenu(QWidget *parent)
     addAction(onlyCapturePopupAction.get());
 
     quitAfterSaveAction->setText(i18n("Quit after manual Save or Copy"));
-    quitAfterSaveAction->setToolTip(i18n("Quit Spectacle after manually saving or copying the image"));
+    quitAfterSaveAction->setToolTip(i18n("Quit Lorgn after manually saving or copying the image"));
     quitAfterSaveAction->setCheckable(true);
     quitAfterSaveAction->setChecked(Settings::quitAfterSaveCopyExport());
     connect(quitAfterSaveAction.get(), &QAction::toggled, this, [](bool checked){

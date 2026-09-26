@@ -51,7 +51,7 @@ struct CommandLineOptions {
     };
     const QCommandLineOption launchOnly = {
         {u"l"_s, u"launchonly"_s},
-        i18n("Launch Spectacle without taking a screenshot")
+        i18n("Launch Lorgn without taking a screenshot")
     };
     const QCommandLineOption gui = {
         {u"g"_s, u"gui"_s},
@@ -93,7 +93,7 @@ struct CommandLineOptions {
     };
     const QCommandLineOption newInstance = {
         {u"i"_s, u"new-instance"_s},
-        i18n("Starts a new GUI instance of spectacle without registering to DBus")
+        i18n("Starts a new GUI instance of Lorgn without registering to DBus")
     };
     const QCommandLineOption pointer = {
         {u"p"_s, u"pointer"_s},
