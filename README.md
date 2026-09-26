@@ -2,13 +2,13 @@
 
 <img src="icons/sc-apps-lorgn.svg" width="128" alt="Lorgn">
 
-# Lorgn
+# Lorgn ("lord" with an n)
 
 Instant screenshot capture with shareable links on your own domain.
 
 </div>
 
-Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 for KDE Plasma, pronounced like "lord" with an n.
+Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 for KDE Plasma.
 
 ## What sets it apart
 
