@@ -613,6 +613,21 @@ bool ExportManager::isTempFileAlreadyUsed(const QUrl &url) const
     return m_usedTempFileNames.contains(url);
 }
 
+void ExportManager::copyLinkToClipboard(const QString &link)
+{
+    auto data = new QMimeData();
+    data->setText(link);
+    KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
+    // Without a clipboard manager, text we own vanishes when we quit. wl-copy keeps
+    // serving it in its own process, so hand the link over when it is available.
+    if (qEnvironmentVariableIsSet("WAYLAND_DISPLAY")) {
+        const QString wlCopy = QStandardPaths::findExecutable(u"wl-copy"_s);
+        if (!wlCopy.isEmpty()) {
+            QProcess::startDetached(wlCopy, {u"--"_s, link});
+        }
+    }
+}
+
 void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
 {
     if (m_saveImage.isNull() && actions & (Save | SaveAs | CopyImage)) {
@@ -628,17 +643,7 @@ void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
         if (!m_uploader) {
             m_uploader = new Uploader(this);
             connect(m_uploader, &Uploader::finished, this, [this](const QString &link) {
-                auto data = new QMimeData();
-                data->setText(link);
-                KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
-                // Without a clipboard manager, text we own vanishes when we quit. wl-copy keeps
-                // serving it in its own process, so hand the link over when it is available.
-                if (qEnvironmentVariableIsSet("WAYLAND_DISPLAY")) {
-                    const QString wlCopy = QStandardPaths::findExecutable(u"wl-copy"_s);
-                    if (!wlCopy.isEmpty()) {
-                        QProcess::startDetached(wlCopy, {u"--"_s, link});
-                    }
-                }
+                copyLinkToClipboard(link);
                 Q_EMIT imageExported(CopyImage | UserAction, QUrl(link));
             });
             connect(m_uploader, &Uploader::failed, this, &ExportManager::errorMessage);
@@ -872,6 +877,24 @@ void ExportManager::exportVideo(ExportManager::Actions actions, const QUrl &inpu
             actions.setFlag(AnySave, false);
             Q_EMIT errorMessage(i18nc("@info", "Unable to save recording. Could not move file to location: %1", outputUrl.toString()));
             return;
+        }
+    }
+
+    if (actions & CopyPath && actions & UserAction && Settings::copyUploadsLink()) {
+        // Upload the recording and copy the link instead of the file path.
+        actions.setFlag(CopyPath, false);
+        if (!inputUrl.isLocalFile()) {
+            Q_EMIT errorMessage(i18nc("@info", "Only recordings saved on this computer can be uploaded."));
+        } else {
+            if (!m_videoUploader) {
+                m_videoUploader = new Uploader(this);
+                connect(m_videoUploader, &Uploader::finished, this, [this](const QString &link) {
+                    copyLinkToClipboard(link);
+                    Q_EMIT videoExported(CopyPath | UserAction, QUrl(link));
+                });
+                connect(m_videoUploader, &Uploader::failed, this, &ExportManager::errorMessage);
+            }
+            m_videoUploader->uploadFile(inputFile, inputName, QMimeDatabase().mimeTypeForFile(inputName).name());
         }
     }
 

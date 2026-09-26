@@ -28,11 +28,15 @@ public:
 
     /// Starts the upload. Emits exactly one of finished() or failed().
     void upload(const QImage &image, const QString &filename);
+    /// Same for a file on disk (a screen recording). The file is streamed, not loaded into memory.
+    void uploadFile(const QString &path, const QString &filename, const QString &mime);
 
 Q_SIGNALS:
     void finished(const QString &link);
     void failed(const QString &message);
 
 private:
+    void start(const QByteArray &data, const QString &filePath, const QString &filename, const QString &mime);
+
     QNetworkAccessManager *m_nam;
 };

@@ -161,6 +161,8 @@ private:
     QDateTime m_timestamp;
     QUrl m_tempFile;
     Uploader *m_uploader = nullptr;
+    Uploader *m_videoUploader = nullptr;
+    void copyLinkToClipboard(const QString &link);
     std::unique_ptr<QLockFile> m_tempDirLock;
     std::unique_ptr<QTemporaryDir> m_tempDir;
     QList<QUrl> m_usedTempFileNames;

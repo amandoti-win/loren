@@ -77,8 +77,9 @@ ButtonGrid {
     // We only show this in video mode to save space in screenshot mode
     ToolButton {
         visible: SpectacleCore.videoMode
-        icon.name: "edit-copy-path"
-        text: i18n("Copy Location")
+        highlighted: Settings.copyUploadsLink
+        icon.name: Settings.copyUploadsLink ? "cloud-upload" : "edit-copy-path"
+        text: Settings.copyUploadsLink ? i18n("Upload") : i18n("Copy Location")
         onClicked: contextWindow.copyLocation()
     }
 

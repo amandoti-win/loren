@@ -26,7 +26,7 @@ HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8080"))
 MAX_BYTES = int(os.environ.get("MAX_MB", "50")) * 1024 * 1024
 KEY = re.compile(r"^[A-Za-z0-9]{8}(\.[a-z0-9]{1,8})?$")
-INLINE = ("image/png", "image/jpeg", "image/gif", "image/webp", "video/mp4", "text/plain")
+INLINE = ("image/png", "image/jpeg", "image/gif", "image/webp", "video/mp4", "video/webm", "text/plain")
 
 
 class Handler(http.server.BaseHTTPRequestHandler):

@@ -3,8 +3,8 @@
 //   PUT /upload?name=shot.png   (Authorization: Bearer <UPLOAD_TOKEN>)  ->  {"key": "AbC123xY.png"}
 //   GET /f/<key>                                                        ->  the file (public)
 
-const INLINE = new Set(["image/png", "image/jpeg", "image/gif", "image/webp", "video/mp4", "text/plain"]);
-const TYPES = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", webp: "image/webp", mp4: "video/mp4", txt: "text/plain" };
+const INLINE = new Set(["image/png", "image/jpeg", "image/gif", "image/webp", "video/mp4", "video/webm", "text/plain"]);
+const TYPES = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", webp: "image/webp", mp4: "video/mp4", webm: "video/webm", txt: "text/plain" };
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const KEY = /^[A-Za-z0-9]{8}(\.[a-z0-9]{1,8})?$/;
 

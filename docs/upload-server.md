@@ -41,7 +41,7 @@ returns something you can build a link from will work. See "Other servers" below
    On many home connections they are not; use Option B instead.
 
 The example server stores files forever, has no delete or expiry, and limits each file to 50 MB (`MAX_MB`).
-Treat it as a starting point.
+Treat it as a starting point. Screen recordings are much larger than screenshots, so raise `MAX_MB` if you upload them.
 
 ## Option B: Cloudflare (Worker and R2, no server to run)
 
@@ -52,6 +52,9 @@ API as above. You need a Cloudflare account with R2 enabled. Node.js is needed f
     npx wrangler r2 bucket create shots-files
     npx wrangler deploy
     npx wrangler secret put UPLOAD_TOKEN
+
+Screen recordings are uploaded the same way, and the Worker rejects anything over `MAX_MB` (90 by default; Cloudflare also
+caps request bodies at 100 MB on the free plan).
 
 Paste a long random token when asked (`openssl rand -base64 32` makes one) and keep a copy for Lorgn.
 The Worker is then live at `https://shots.<your-subdomain>.workers.dev`.

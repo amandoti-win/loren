@@ -96,6 +96,21 @@ QString Uploader::configPath()
 
 void Uploader::upload(const QImage &image, const QString &filename)
 {
+    QByteArray png;
+    QBuffer buffer(&png);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+    buffer.close();
+    start(png, QString(), filename, u"image/png"_s);
+}
+
+void Uploader::uploadFile(const QString &path, const QString &filename, const QString &mime)
+{
+    start(QByteArray(), path, filename, mime);
+}
+
+void Uploader::start(const QByteArray &data, const QString &filePath, const QString &filename, const QString &mime)
+{
     auto fail = [this](const QString &message) {
         QMetaObject::invokeMethod(this, [this, message] { Q_EMIT failed(message); }, Qt::QueuedConnection);
     };
@@ -139,13 +154,16 @@ void Uploader::upload(const QImage &image, const QString &filename)
         return;
     }
 
-    QByteArray png;
-    QBuffer buffer(&png);
-    buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "PNG");
-    buffer.close();
+    QFile *body = nullptr;
+    if (!filePath.isEmpty()) {
+        body = new QFile(filePath);
+        if (!body->open(QIODevice::ReadOnly)) {
+            delete body;
+            fail(u"Could not read %1"_s.arg(filePath));
+            return;
+        }
+    }
 
-    const QString mime = u"image/png"_s;
     const QHash<QString, QString> vars{{u"filename"_s, filename}, {u"mime"_s, mime}};
 
     QUrl url = baseUrl;
@@ -173,7 +191,7 @@ void Uploader::upload(const QImage &image, const QString &filename)
         if (!request.hasRawHeader("Content-Type")) {
             request.setHeader(QNetworkRequest::ContentTypeHeader, mime);
         }
-        reply = m_nam->sendCustomRequest(request, method, png);
+        reply = body ? m_nam->sendCustomRequest(request, method, body) : m_nam->sendCustomRequest(request, method, data);
     } else {
         auto *multipart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
         QHttpPart part;
@@ -181,10 +199,18 @@ void Uploader::upload(const QImage &image, const QString &filename)
         const QString field = cfg.value(u"file_field"_s).toString(u"file"_s);
         part.setHeader(QNetworkRequest::ContentDispositionHeader,
                        u"form-data; name=\"%1\"; filename=\"%2\""_s.arg(field, filename));
-        part.setBody(png);
+        if (body) {
+            part.setBodyDevice(body);
+        } else {
+            part.setBody(data);
+        }
         multipart->append(part);
         reply = m_nam->sendCustomRequest(request, method, multipart);
         multipart->setParent(reply);
+    }
+
+    if (body) {
+        body->setParent(reply);
     }
 
     const QString host = url.host();
