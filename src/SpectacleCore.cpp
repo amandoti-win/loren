@@ -395,6 +395,11 @@ SpectacleCore::SpectacleCore(QObject *parent)
             return;
         }
 
+        if (actions & ExportManager::LinkCopied) {
+            viewerWindow->showLinkCopiedMessage();
+            return;
+        }
+
         if (actions & ExportManager::AnySave) {
             SpectacleWindow::setTitleForAll(SpectacleWindow::Saved, url.fileName());
             if (actions & ExportManager::CopyImage) {
@@ -429,6 +434,11 @@ SpectacleCore::SpectacleCore(QObject *parent)
 
         auto viewerWindow = ViewerWindow::instance();
         if (!viewerWindow) {
+            return;
+        }
+
+        if (actions & ExportManager::LinkCopied) {
+            viewerWindow->showLinkCopiedMessage();
             return;
         }
 

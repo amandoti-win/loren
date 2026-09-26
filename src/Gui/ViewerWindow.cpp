@@ -177,6 +177,11 @@ void ViewerWindow::showCopiedMessage()
     showInlineMessage("%1/Gui/CopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});
 }
 
+void ViewerWindow::showLinkCopiedMessage()
+{
+    showInlineMessage("%1/Gui/LinkCopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});
+}
+
 void ViewerWindow::showLocationCopiedMessage()
 {
     showInlineMessage("%1/Gui/LocationCopiedMessage.qml"_L1.arg(SPECTACLE_QML_PATH), {});

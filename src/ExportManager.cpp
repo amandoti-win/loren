@@ -644,7 +644,7 @@ void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
             m_uploader = new Uploader(this);
             connect(m_uploader, &Uploader::finished, this, [this](const QString &link) {
                 copyLinkToClipboard(link);
-                Q_EMIT imageExported(CopyImage | UserAction, QUrl(link));
+                Q_EMIT imageExported(CopyImage | UserAction | LinkCopied, QUrl(link));
             });
             connect(m_uploader, &Uploader::failed, this, &ExportManager::errorMessage);
         }
@@ -890,7 +890,7 @@ void ExportManager::exportVideo(ExportManager::Actions actions, const QUrl &inpu
                 m_videoUploader = new Uploader(this);
                 connect(m_videoUploader, &Uploader::finished, this, [this](const QString &link) {
                     copyLinkToClipboard(link);
-                    Q_EMIT videoExported(CopyPath | UserAction, QUrl(link));
+                    Q_EMIT videoExported(CopyPath | UserAction | LinkCopied, QUrl(link));
                 });
                 connect(m_videoUploader, &Uploader::failed, this, &ExportManager::errorMessage);
             }

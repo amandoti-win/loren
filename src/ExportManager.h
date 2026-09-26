@@ -44,6 +44,7 @@ public:
         CopyImage   = 0b00100,
         CopyPath    = 0b01000,
         UserAction  = 0b10000,
+        LinkCopied  = 0b100000, //< An upload finished and its link was copied.
         AnySave     = Save | SaveAs,
         AnyAction   = AnySave | CopyImage | CopyPath,
     };
