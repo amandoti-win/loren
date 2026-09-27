@@ -18,6 +18,7 @@
 #include <QDBusConnection>
 #include <QDir>
 #include <QIcon>
+#include <QMimeData>
 #include <QSessionManager>
 
 #include <KAboutData>
@@ -25,6 +26,7 @@
 #include <KDBusService>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KSystemClipboard>
 #include <KWindowSystem>
 
 using namespace Qt::StringLiterals;
@@ -36,6 +38,23 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     QIcon::setFallbackThemeName(u"breeze"_s);
     QApplication app(argc, argv);
+
+    // "loren --hold-clipboard <text>": keep some text on the clipboard after the app that copied
+    // it has quit. Wayland clipboards belong to the process that set them, so without a clipboard
+    // manager the text would vanish. This tiny background process owns it until something else
+    // is copied. It replaces the need for wl-copy.
+    {
+        const QStringList args = app.arguments();
+        const int at = args.indexOf(u"--hold-clipboard"_s);
+        if (at >= 0 && at + 1 < args.size()) {
+            auto data = new QMimeData();
+            data->setText(args.at(at + 1));
+            // KSystemClipboard deletes the data when another program takes the clipboard over.
+            QObject::connect(data, &QObject::destroyed, &app, &QCoreApplication::quit);
+            KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
+            return app.exec();
+        }
+    }
 
     // Loren's own accent is oxblood. It only replaces Plasma's stock blue highlight, so themes and
     // accent colours the user chose themselves are left alone.

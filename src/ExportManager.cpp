@@ -633,14 +633,9 @@ void ExportManager::copyLinkToClipboard(const QString &link)
     auto data = new QMimeData();
     data->setText(link);
     KSystemClipboard::instance()->setMimeData(data, QClipboard::Clipboard);
-    // Without a clipboard manager, text we own vanishes when we quit. wl-copy keeps
-    // serving it in its own process, so hand the link over when it is available.
-    if (qEnvironmentVariableIsSet("WAYLAND_DISPLAY")) {
-        const QString wlCopy = QStandardPaths::findExecutable(u"wl-copy"_s);
-        if (!wlCopy.isEmpty()) {
-            QProcess::startDetached(wlCopy, {u"--"_s, link});
-        }
-    }
+    // Without a clipboard manager, text we own vanishes when we quit, so hand the link to a tiny
+    // background copy of ourselves that keeps it on the clipboard.
+    QProcess::startDetached(QCoreApplication::applicationFilePath(), {u"--hold-clipboard"_s, link});
 }
 
 void ExportManager::exportImage(ExportManager::Actions actions, QUrl url)
