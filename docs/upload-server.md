@@ -53,15 +53,29 @@ Treat it as a starting point. Screen recordings are much larger than screenshots
 ## Option B: Cloudflare (Worker and R2, no server to run)
 
 `examples/cloudflare-worker/` is a Worker that stores uploads in an R2 bucket and serves them at `/f/<key>`, with the same
-API as above. You need a Cloudflare account with R2 enabled. Node.js is needed for `wrangler`.
+API as above. You need a Cloudflare account with R2 enabled.
+
+### One click
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/amandoti-win/loren/tree/main/examples/cloudflare-worker)
+
+The button copies the Worker into your own GitHub account, creates the R2 bucket and the Worker in your Cloudflare
+account, and asks you for `UPLOAD_TOKEN`. Paste a long random string (`openssl rand -base64 32` makes one) and keep a
+copy for Loren. The Worker is then live at `https://shots.<your-subdomain>.workers.dev`.
+
+### From the command line
+
+The same thing by hand. Node.js is needed for `wrangler`.
 
     cd examples/cloudflare-worker
     npx wrangler r2 bucket create shots-files
     npx wrangler deploy
     npx wrangler secret put UPLOAD_TOKEN
 
-Paste a long random token when asked (`openssl rand -base64 32` makes one) and keep a copy for Loren.
-The Worker is then live at `https://shots.<your-subdomain>.workers.dev`.
+Paste a long random token when asked and keep a copy for Loren. The Worker is then live at
+`https://shots.<your-subdomain>.workers.dev`.
+
+### What the Worker does
 
 The Worker supports expiry and delete tokens. An hourly cron trigger (already in `wrangler.jsonc`) deletes expired
 files, and an expired file stops being served as soon as it expires. Screen recordings are uploaded the same way, and the Worker rejects anything over `MAX_MB` (90 by default; Cloudflare also
@@ -177,6 +191,8 @@ A form upload whose reply is JSON like `{"data": {"url": "..."}}`:
   Loren's uploader was tested against it for the expiry, the delete address, deleting, and the history file.
 - The Worker's expiry and delete code was run in Node against a fake R2 bucket, all routes and the hourly cleanup. It has
   not run on real Cloudflare.
+- The Deploy to Cloudflare button has not been clicked through by me. Cloudflare's deploy page blocks automated requests,
+  so I could only check that the example folder has what the button needs.
 - The Worker in `examples/cloudflare-worker/` has not been deployed from this repo by me. It implements the same API as
   `server.py`, and a private Worker with the same upload API was used with Loren.
 - Cloudflare Access with a service token was used in the same private setup.
