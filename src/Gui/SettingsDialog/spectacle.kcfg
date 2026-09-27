@@ -13,7 +13,7 @@
 <kcfgfile />
 <group name="General">
     <entry name="launchAction" type="Enum">
-        <label>What to do when Lorgn is launched</label>
+        <label>What to do when Loren is launched</label>
         <choices>
         <choice name="TakeFullscreenScreenshot"></choice>
         <choice name="UseLastUsedCapturemode"></choice>
@@ -23,7 +23,7 @@
         <default>TakeRegionScreenshot</default>
     </entry>
     <entry name="printKeyRunningAction" type="Enum">
-        <label>What should happen if print key is pressed when Lorgn is already running</label>
+        <label>What should happen if print key is pressed when Loren is already running</label>
         <choices>
         <choice name="TakeNewScreenshot"></choice>
         <choice name="StartNewInstance"></choice>

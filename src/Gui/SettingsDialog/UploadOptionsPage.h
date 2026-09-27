@@ -1,4 +1,4 @@
-/* Lorgn, based on KDE Spectacle
+/* Loren, based on KDE Spectacle
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 

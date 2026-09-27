@@ -1,13 +1,13 @@
 # Setting up the upload server
 
-Lorgn does not host anything. When you upload, it sends the image to a server you run and copies the link that server
+Loren does not host anything. When you upload, it sends the image to a server you run and copies the link that server
 gives back. The link is on your own domain.
 
-You need two things: a server that takes an upload and serves the file back, and the Lorgn upload settings pointing at it.
+You need two things: a server that takes an upload and serves the file back, and the Loren upload settings pointing at it.
 
 ## What the server has to do
 
-Lorgn sends the image as an HTTP request and reads the link out of the reply. The examples in this repo use this API:
+Loren sends the image as an HTTP request and reads the link out of the reply. The examples in this repo use this API:
 
     PUT /upload?name=shot.png&expires=86400   Authorization: Bearer <token>   body: the PNG bytes
     ->  {"key": "AbC123xY.png", "delete_token": "...", "expires_at": 1790000000}
@@ -15,7 +15,7 @@ Lorgn sends the image as an HTTP request and reads the link out of the reply. Th
     GET /f/AbC123xY.png                       ->  the image (public, no login)
     DELETE /f/AbC123xY.png?token=<delete_token>  ->  {"deleted": true}
 
-`expires` and the delete token are optional. Without `expires` the file is kept until you delete it. When Lorgn is set
+`expires` and the delete token are optional. Without `expires` the file is kept until you delete it. When Loren is set
 to expire links it adds `expires=<seconds>` to the upload, and the server deletes the file after that time. A deleted
 or expired link answers 404. The delete token is a secret: whoever has it can delete the file, so it is never part of
 the public link.
@@ -60,7 +60,7 @@ API as above. You need a Cloudflare account with R2 enabled. Node.js is needed f
     npx wrangler deploy
     npx wrangler secret put UPLOAD_TOKEN
 
-Paste a long random token when asked (`openssl rand -base64 32` makes one) and keep a copy for Lorgn.
+Paste a long random token when asked (`openssl rand -base64 32` makes one) and keep a copy for Loren.
 The Worker is then live at `https://shots.<your-subdomain>.workers.dev`.
 
 The Worker supports expiry and delete tokens. An hourly cron trigger (already in `wrangler.jsonc`) deletes expired
@@ -73,20 +73,20 @@ To use your own domain, which must be on your Cloudflare account, add this to `w
 
 ### Protecting uploads with Cloudflare Access instead of a token (optional)
 
-If you put the whole hostname behind Cloudflare Access, so a login page guards the site, uploads from Lorgn need a
+If you put the whole hostname behind Cloudflare Access, so a login page guards the site, uploads from Loren need a
 service token:
 
 1. In Zero Trust, create a service token (Access controls, Service credentials).
 2. On the Access application for your hostname, add a policy with action **Service Auth** that includes that token.
 3. Add a second Access application for the path `f/*` on the same hostname with a **Bypass** policy for everyone,
    so shared links open without a login.
-4. In Lorgn's Upload settings, fill in **Access client ID** and **Access client secret** with the token's values.
+4. In Loren's Upload settings, fill in **Access client ID** and **Access client secret** with the token's values.
 
-Lorgn sends its own `User-Agent`, because Cloudflare blocks empty and library-default ones.
+Loren sends its own `User-Agent`, because Cloudflare blocks empty and library-default ones.
 
-## Connect Lorgn to it
+## Connect Loren to it
 
-Open Lorgn, go to Settings, then Upload, and fill in:
+Open Loren, go to Settings, then Upload, and fill in:
 
 | Field | Value for the examples above |
 | --- | --- |
@@ -110,11 +110,11 @@ To use expiring and deletable links, also fill in:
 | Delete link | `https://files.example.com/f/{value}?token={delete}` |
 
 With those set, the "link copied" message has a **Delete** button that removes the file from your server. The message
-stays for 30 seconds. Every upload is also written to `~/.local/state/lorgn/uploads.jsonl` (readable only by you) with
+stays for 30 seconds. Every upload is also written to `~/.local/state/loren/uploads.jsonl` (readable only by you) with
 its link and delete address, so you can delete it later, for example with
 `curl -X DELETE '<delete_url from the file>'`.
 
-Settings are saved to `~/.config/lorgn/upload.json`, readable only by you, because it can hold your token.
+Settings are saved to `~/.config/loren/upload.json`, readable only by you, because it can hold your token.
 You can also write that file by hand:
 
     {
@@ -171,12 +171,12 @@ A form upload whose reply is JSON like `{"data": {"url": "..."}}`:
 
 ## What has been tested
 
-- `examples/server.py` with Lorgn's uploader: the upload worked, the returned link served the image, and a wrong token
+- `examples/server.py` with Loren's uploader: the upload worked, the returned link served the image, and a wrong token
   produced a clear "HTTP 401, check your credentials" message.
 - Expiry and delete: the example server was tested with an expiry, a wrong and a right delete token, and an expired file.
-  Lorgn's uploader was tested against it for the expiry, the delete address, deleting, and the history file.
+  Loren's uploader was tested against it for the expiry, the delete address, deleting, and the history file.
 - The Worker's expiry and delete code was run in Node against a fake R2 bucket, all routes and the hourly cleanup. It has
   not run on real Cloudflare.
 - The Worker in `examples/cloudflare-worker/` has not been deployed from this repo by me. It implements the same API as
-  `server.py`, and a private Worker with the same upload API was used with Lorgn.
+  `server.py`, and a private Worker with the same upload API was used with Loren.
 - Cloudflare Access with a service token was used in the same private setup.

@@ -1,0 +1,7 @@
+[Unit]
+Description=Loren screenshot capture utility
+
+[Service]
+ExecStart=@KDE_INSTALL_FULL_BINDIR@/loren --dbus
+BusName=win.amandoti.Loren
+KillMode=process

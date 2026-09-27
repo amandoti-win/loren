@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A tiny upload server to pair with Lorgn. Stdlib only.
+"""A tiny upload server to pair with Loren. Stdlib only.
 
     UPLOAD_TOKEN=some-long-random-string ./server.py
 

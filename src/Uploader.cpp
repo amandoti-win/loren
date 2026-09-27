@@ -1,4 +1,4 @@
-/* Lorgn, based on KDE Spectacle
+/* Loren, based on KDE Spectacle
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
@@ -83,7 +83,7 @@ QString extractValue(const QJsonObject &spec, const QString &text)
 void appendHistory(const QString &link, const QString &deleteUrl, int expires)
 {
     const QString base = qEnvironmentVariable("XDG_STATE_HOME", QDir::homePath() + u"/.local/state"_s);
-    const QString dir = base + u"/lorgn"_s;
+    const QString dir = base + u"/loren"_s;
     QDir().mkpath(dir);
     QFile file(dir + u"/uploads.jsonl"_s);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) {
@@ -107,9 +107,14 @@ Uploader::Uploader(QObject *parent)
 
 QString Uploader::configPath()
 {
-    const QString own = configDir(u"lorgn"_s) + u"/upload.json"_s;
+    const QString own = configDir(u"loren"_s) + u"/upload.json"_s;
     if (QFileInfo::exists(own)) {
         return own;
+    }
+    // Older names of this app and its predecessor keep working.
+    const QString lorgn = configDir(u"lorgn"_s) + u"/upload.json"_s;
+    if (QFileInfo::exists(lorgn)) {
+        return lorgn;
     }
     const QString legacy = configDir(u"spectacle-uploader"_s) + u"/config.json"_s;
     return QFileInfo::exists(legacy) ? legacy : own;
@@ -210,7 +215,7 @@ void Uploader::start(const QByteArray &data, const QString &filePath, const QStr
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::ManualRedirectPolicy);
     request.setTransferTimeout(int(cfg.value(u"timeout"_s).toInt(300) * 1000));
     // Cloudflare-fronted servers often block empty or library-default agents.
-    request.setHeader(QNetworkRequest::UserAgentHeader, u"lorgn/1.0"_s);
+    request.setHeader(QNetworkRequest::UserAgentHeader, u"loren/1.0"_s);
     const QJsonObject headers = cfg.value(u"headers"_s).toObject();
     for (auto it = headers.begin(); it != headers.end(); ++it) {
         request.setRawHeader(it.key().toUtf8(), expand(it.value().toString(), vars).toUtf8());
@@ -309,7 +314,7 @@ void Uploader::deleteRemote(const QString &urlString)
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::ManualRedirectPolicy);
     request.setTransferTimeout(30000);
-    request.setHeader(QNetworkRequest::UserAgentHeader, u"lorgn/1.0"_s);
+    request.setHeader(QNetworkRequest::UserAgentHeader, u"loren/1.0"_s);
     const QJsonObject headers = cfg.value(u"headers"_s).toObject();
     for (auto it = headers.begin(); it != headers.end(); ++it) {
         request.setRawHeader(it.key().toUtf8(), it.value().toString().toUtf8());

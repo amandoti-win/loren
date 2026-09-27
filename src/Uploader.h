@@ -1,4 +1,4 @@
-/* Lorgn, based on KDE Spectacle
+/* Loren, based on KDE Spectacle
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
@@ -23,7 +23,7 @@ class Uploader : public QObject
 public:
     explicit Uploader(QObject *parent = nullptr);
 
-    /// ~/.config/lorgn/upload.json, falling back to the spectacle-uploader config.
+    /// ~/.config/loren/upload.json, falling back to the spectacle-uploader config.
     static QString configPath();
 
     /// Starts the upload. Emits exactly one of finished() or failed().

@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     QIcon::setFallbackThemeName(u"breeze"_s);
     QApplication app(argc, argv);
 
-    // Lorgn's own accent is oxblood. It only replaces Plasma's stock blue highlight, so themes and
+    // Loren's own accent is oxblood. It only replaces Plasma's stock blue highlight, so themes and
     // accent colours the user chose themselves are left alone.
     {
         QPalette palette = app.palette();
@@ -57,25 +57,25 @@ int main(int argc, char **argv)
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("spectacle"));
     QCoreApplication::setOrganizationDomain(u"amandoti.win"_s);
 
-    KAboutData aboutData(u"lorgn"_s,
-                         u"Lorgn"_s,
+    KAboutData aboutData(u"loren"_s,
+                         u"Loren"_s,
                          QStringLiteral(SPECTACLE_VERSION),
                          i18n("Instant screenshot capture with shareable links on your own domain"),
                          KAboutLicense::GPL_V3,
                          u"(C) 2026 amandoti.win"_s);
     aboutData.setOtherText(u"Fork of Spectacle 6.3.5"_s);
-    aboutData.setHomepage(u"https://github.com/amandoti-win/lorgn"_s);
-    aboutData.addAuthor(u"amandoti.win"_s, u"Lorgn"_s, {}, u"https://github.com/amandoti-win/lorgn"_s);
+    aboutData.setHomepage(u"https://github.com/amandoti-win/loren"_s);
+    aboutData.addAuthor(u"amandoti.win"_s, u"Loren"_s, {}, u"https://github.com/amandoti-win/loren"_s);
     aboutData.addAuthor(u"Boudhayan Gupta"_s, u"Spectacle"_s, u"bgupta@kde.org"_s);
     aboutData.addAuthor(u"David Redondo"_s, u"Spectacle"_s, u"kde@david-redondo.de"_s);
     aboutData.addAuthor(u"Noah Davis"_s, u"Spectacle"_s, u"noahadvs@gmail.com"_s);
-    aboutData.setCustomAuthorText(u"Report bugs at https://github.com/amandoti-win/lorgn/issues"_s,
-                                  u"Report bugs at <a href=\"https://github.com/amandoti-win/lorgn/issues\">github.com/amandoti-win/lorgn/issues</a>"_s);
+    aboutData.setCustomAuthorText(u"Report bugs at https://github.com/amandoti-win/loren/issues"_s,
+                                  u"Report bugs at <a href=\"https://github.com/amandoti-win/loren/issues\">github.com/amandoti-win/loren/issues</a>"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     aboutData.setOrganizationDomain("amandoti.win");
-    aboutData.setDesktopFileName(u"win.amandoti.lorgn"_s);
+    aboutData.setDesktopFileName(u"win.amandoti.loren"_s);
     KAboutData::setApplicationData(aboutData);
-    app.setWindowIcon(QIcon::fromTheme(u"lorgn"_s));
+    app.setWindowIcon(QIcon::fromTheme(u"loren"_s));
 
     KCrash::initialize();
 
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     // We currently don't support desktop environments besides KDE Plasma on Wayland
     // because we have to rely on KWin's DBus API.
     if (KWindowSystem::isPlatformWayland() && !ScreenShotEffect::isLoaded()) {
-        auto message = i18n("On Wayland, Lorgn requires the KWin compositor, which does not seem to be available. Use Lorgn with KWin, or use a different screenshot tool.");
+        auto message = i18n("On Wayland, Loren requires the KWin compositor, which does not seem to be available. Use Loren with KWin, or use a different screenshot tool.");
         qWarning().noquote() << message;
         if (commandLineParser.isSet(CommandLineOptions::self()->background)
             || commandLineParser.isSet(CommandLineOptions::self()->dbus)) {
@@ -156,7 +156,7 @@ int main(int argc, char **argv)
                          Q_EMIT dbusAdapter->RecordingTaken(url.toLocalFile());
                      });
     QDBusConnection::sessionBus().registerObject(u"/"_s, spectacleCore);
-    QDBusConnection::sessionBus().registerService(u"win.amandoti.Lorgn"_s);
+    QDBusConnection::sessionBus().registerService(u"win.amandoti.Loren"_s);
 
     // fire it up
     spectacleCore->activate(app.arguments(), QDir::currentPath());

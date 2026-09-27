@@ -1,7 +1,7 @@
 [Global]
-IconName=lorgn
-DesktopEntry=win.amandoti.lorgn
-Name=Lorgn
+IconName=loren
+DesktopEntry=win.amandoti.loren
+Name=Loren
 Comment=Screenshot Capture Utility
 
 [Event/newScreenshotSaved]

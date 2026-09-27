@@ -17,7 +17,7 @@ ecm_qt_declare_logging_category(SPECTACLE_SRCS
 )
 
 add_executable(spectacle)
-set_target_properties(spectacle PROPERTIES OUTPUT_NAME lorgn)
+set_target_properties(spectacle PROPERTIES OUTPUT_NAME loren)
 qt_add_qml_module(spectacle URI ${SPECTACLE_QML_URI} DEPENDENCIES QtCore QtQuick)
 
 target_sources(spectacle PRIVATE

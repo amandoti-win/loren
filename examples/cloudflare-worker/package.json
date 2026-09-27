@@ -2,12 +2,12 @@
   "name": "shots",
   "version": "1.0.0",
   "private": true,
-  "description": "Upload host for Lorgn: a Cloudflare Worker that stores files in R2",
+  "description": "Upload host for Loren: a Cloudflare Worker that stores files in R2",
   "license": "Unlicense",
   "cloudflare": {
     "bindings": {
       "UPLOAD_TOKEN": {
-        "description": "A long random string. Whoever has it can upload; anyone with a link can view. Paste the same value into the Lorgn upload settings as `Authorization: Bearer <token>`. Generate one with `openssl rand -base64 32`."
+        "description": "A long random string. Whoever has it can upload; anyone with a link can view. Paste the same value into the Loren upload settings as `Authorization: Bearer <token>`. Generate one with `openssl rand -base64 32`."
       },
       "FILES": {
         "description": "R2 bucket that stores the uploaded files."

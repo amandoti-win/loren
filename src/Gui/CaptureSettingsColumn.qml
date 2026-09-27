@@ -52,7 +52,7 @@ ColumnLayout {
     QQC.CheckBox {
         Layout.fillWidth: true
         text: i18n("Quit after manual Save or Copy")
-        QQC.ToolTip.text: i18n("Quit Lorgn after manually saving or copying the image.")
+        QQC.ToolTip.text: i18n("Quit Loren after manually saving or copying the image.")
         QQC.ToolTip.delay: Kirigami.Units.toolTipDelay
         QQC.ToolTip.visible: hovered
         checked: Settings.quitAfterSaveCopyExport

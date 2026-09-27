@@ -35,7 +35,7 @@ ShortcutActions::ShortcutActions()
     // RecordRegion
     // _launch
     {
-        QAction *action = new QAction(i18nc("@action global shortcut", "Launch Lorgn"), &mActions);
+        QAction *action = new QAction(i18nc("@action global shortcut", "Launch Loren"), &mActions);
         action->setObjectName(u"_launch"_s);
         action->setProperty("isConfigurationAction", true);
         mActions.addAction(action->objectName(), action);
@@ -91,7 +91,7 @@ ShortcutActions::ShortcutActions()
         mActions.addAction(action->objectName(), action);
     }
     {
-        QAction *action = new QAction(i18nc("@action global shortcut", "Launch Lorgn without capturing"), &mActions);
+        QAction *action = new QAction(i18nc("@action global shortcut", "Launch Loren without capturing"), &mActions);
         action->setObjectName(u"OpenWithoutScreenshot"_s);
         action->setProperty("isConfigurationAction", true);
         mActions.addAction(action->objectName(), action);

@@ -198,7 +198,7 @@ void ExportMenu::loadPurposeItems()
     };
     mPurposeMenu->model()->setInputData(inputData);
     mPurposeMenu->model()->setPluginType(u"Export"_s);
-    // KDE-specific share targets are not offered in Lorgn.
+    // KDE-specific share targets are not offered in Loren.
     mPurposeMenu->model()->setDisabledPlugins({u"kdeconnectplugin"_s, u"kdeconnectsmsplugin"_s,
                                                u"phabricatorplugin"_s, u"reviewboardplugin"_s});
     mPurposeMenu->reload();

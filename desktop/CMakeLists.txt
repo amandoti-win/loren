@@ -1,18 +1,18 @@
 # install the .desktop and rc files in the correct place
 
-configure_file(win.amandoti.lorgn.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.lorgn.desktop)
+configure_file(win.amandoti.loren.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.loren.desktop)
 install(
-    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.lorgn.desktop
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/win.amandoti.loren.desktop
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
 
 install( DIRECTORY DESTINATION "${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel" )
 install(
-    CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E create_symlink \"${KDE_INSTALL_FULL_APPDIR}/win.amandoti.lorgn.desktop\" \"\$ENV{DESTDIR}${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/win.amandoti.lorgn.desktop\")"
+    CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" -E create_symlink \"${KDE_INSTALL_FULL_APPDIR}/win.amandoti.loren.desktop\" \"\$ENV{DESTDIR}${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/win.amandoti.loren.desktop\")"
 )
 
 install(
-    FILES lorgn.notifyrc
+    FILES loren.notifyrc
     DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
 )
 

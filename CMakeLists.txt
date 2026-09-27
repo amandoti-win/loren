@@ -4,7 +4,7 @@ set(PROJECT_VERSION "1.0.0")
 set(SPECTACLE_VERSION ${PROJECT_VERSION})
 
 # Spectacle project
-project(Lorgn VERSION ${SPECTACLE_VERSION})
+project(Loren VERSION ${SPECTACLE_VERSION})
 
 # minimum requirements
 set(PROJECT_DEP_VERSION "6.3.5")
@@ -141,7 +141,7 @@ add_subdirectory(icons)
 add_subdirectory(tests)
 
 
-ecm_qt_install_logging_categories(EXPORT SPECTACLE FILE lorgn.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
+ecm_qt_install_logging_categories(EXPORT SPECTACLE FILE loren.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 # summaries
 
@@ -154,17 +154,19 @@ kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 
 # Debian package: cpack -G DEB
 set(CPACK_GENERATOR "DEB")
-set(CPACK_PACKAGE_NAME "lorgn")
+set(CPACK_PACKAGE_NAME "loren")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Instant screenshot capture with shareable links on your own domain")
 set(CPACK_PACKAGE_CONTACT "amandoti.win")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "amandoti.win")
 set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/amandoti-win/lorgn")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/amandoti-win/loren")
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 # QML modules are loaded at runtime, so the library scan cannot see them.
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "qml6-module-org-kde-kirigami, qml6-module-qtmultimedia, qml6-module-qtqml, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-layouts, qml6-module-qtquick-shapes, qml6-module-qtquick-templates, qml6-module-qtquick-window, libkirigamiplatform6")
 set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "wl-clipboard")
+set(CPACK_DEBIAN_PACKAGE_REPLACES "lorgn")
+set(CPACK_DEBIAN_PACKAGE_CONFLICTS "lorgn")
 set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 set(CPACK_PACKAGING_INSTALL_PREFIX "/usr")
 include(CPack)

@@ -40,7 +40,7 @@ HelpMenu::HelpMenu(QWidget* parent)
     , kHelpMenu(new KHelpMenu(parent, KAboutData::applicationData(), true))
 {
     addActions(kHelpMenu->menu()->actions());
-    // Only "Switch Language" and "About Lorgn" stay: no handbook, no What's This (the app has
+    // Only "Switch Language" and "About Loren" stay: no handbook, no What's This (the app has
     // no help content for it), no bug tracker, no About KDE.
     for (auto id : {KHelpMenu::menuHelpContents, KHelpMenu::menuWhatsThis, KHelpMenu::menuReportBug,
                     KHelpMenu::menuAboutKDE, KHelpMenu::menuDonate}) {
@@ -58,7 +58,7 @@ HelpMenu *HelpMenu::instance()
 
 void HelpMenu::showAppHelp()
 {
-    // No handbook in Lorgn.
+    // No handbook in Loren.
 }
 
 void HelpMenu::onTriggered(QAction *action)

@@ -33,7 +33,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     , m_uploadPage(new UploadOptionsPage(this))
 {
     setFaceType(KPageDialog::List);
-    addPage(m_generalPage, Settings::self(), i18nc("Settings category", "General"), "lorgn"_L1);
+    addPage(m_generalPage, Settings::self(), i18nc("Settings category", "General"), "loren"_L1);
     addPage(m_imagesPage, Settings::self(), i18nc("Settings category", "Image Saving"), "image-x-generic"_L1);
     addPage(m_videosPage, Settings::self(), i18nc("Settings category", "Video Saving"), "video-x-generic"_L1);
     addPage(m_uploadPage, Settings::self(), i18nc("Settings category", "Upload"), "cloud-upload"_L1);

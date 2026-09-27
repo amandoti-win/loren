@@ -1,4 +1,4 @@
-/* Lorgn, based on KDE Spectacle
+/* Loren, based on KDE Spectacle
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
@@ -34,7 +34,7 @@ const QString CfSecretHeader = u"CF-Access-Client-Secret"_s;
 
 QString ownConfigPath()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + u"/lorgn/upload.json"_s;
+    return QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + u"/loren/upload.json"_s;
 }
 
 QLineEdit *secretEdit(QWidget *parent)
@@ -298,7 +298,7 @@ void UploadOptionsPage::testUpload()
     {
         QPainter painter(&image);
         painter.setPen(Qt::white);
-        painter.drawText(image.rect(), Qt::AlignCenter, u"Lorgn test"_s);
+        painter.drawText(image.rect(), Qt::AlignCenter, u"Loren test"_s);
     }
 
     auto *uploader = new Uploader(this);
@@ -312,7 +312,7 @@ void UploadOptionsPage::testUpload()
         m_testButton->setEnabled(true);
         uploader->deleteLater();
     });
-    uploader->upload(image, u"lorgn-test.png"_s);
+    uploader->upload(image, u"loren-test.png"_s);
 }
 
 #include "moc_UploadOptionsPage.cpp"

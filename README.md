@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="icons/sc-apps-lorgn.svg" width="128" alt="Lorgn">
+<img src="icons/sc-apps-loren.svg" width="128" alt="Loren">
 
-# Lorgn ("lord" with an n)
+# Loren ("lord" with an n)
 
 Instant screenshot capture with shareable links on your own domain.
 
 </div>
 
-Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 for KDE Plasma.
+Loren is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 for KDE Plasma.
 
 ## What sets it apart
 
@@ -21,11 +21,11 @@ Lorgn is a fork of [Spectacle](https://invent.kde.org/plasma/spectacle) 6.3.5 fo
 
 ## Install
 
-On Debian, Ubuntu and derivatives, download the `.deb` from the [latest release](https://github.com/amandoti-win/lorgn/releases/latest) and install it:
+On Debian, Ubuntu and derivatives, download the `.deb` from the [latest release](https://github.com/amandoti-win/loren/releases/latest) and install it:
 
-    sudo apt install ./lorgn_1.0.0_amd64.deb
+    sudo apt install ./loren_1.0.0_amd64.deb
 
-Then log out and back in once, so KDE picks up Lorgn's shortcuts (Print launches it if nothing else has the key).
+Then log out and back in once, so KDE picks up Loren's shortcuts (Print launches it if nothing else has the key).
 
 To build it yourself you need the Qt 6.7+ and KDE Frameworks 6.10+ development packages:
 
@@ -33,17 +33,17 @@ To build it yourself you need the Qt 6.7+ and KDE Frameworks 6.10+ development p
     cmake --build build -j$(nproc)
     sudo cmake --install build
 
-**Lorgn has to be installed to take screenshots.** On Wayland, KWin only lets a program capture the screen if it is named in an installed desktop file. The package and `cmake --install` provide that file. A copy run straight from the build folder is refused with "The process is not authorized to take a screenshot".
+**Loren has to be installed to take screenshots.** On Wayland, KWin only lets a program capture the screen if it is named in an installed desktop file. The package and `cmake --install` provide that file. A copy run straight from the build folder is refused with "The process is not authorized to take a screenshot".
 
-Install `wl-clipboard` too (the package recommends it), so a copied link survives after Lorgn quits.
+Install `wl-clipboard` too (the package recommends it), so a copied link survives after Loren quits.
 
 Tested on KDE Plasma 6 on Wayland (Debian 13). X11 and other distributions are untested.
 
 ## Credits and license
 
-Lorgn is a fork of KDE Spectacle. Spectacle's authors and their copyright notices are kept in the source files and the About dialog. The original README is in `README.spectacle.md`.
+Loren is a fork of KDE Spectacle. Spectacle's authors and their copyright notices are kept in the source files and the About dialog. The original README is in `README.spectacle.md`.
 
-Lorgn is GPL-3.0-or-later (`LICENSE`). Spectacle files keep their own headers, mostly LGPL-2.0-or-later, which allows this. New files are GPL-3.0-or-later.
+Loren is GPL-3.0-or-later (`LICENSE`). Spectacle files keep their own headers, mostly LGPL-2.0-or-later, which allows this. New files are GPL-3.0-or-later.
 
 The icon was drawn for this project and has no third-party artwork.
 

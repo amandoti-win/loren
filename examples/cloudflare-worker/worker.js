@@ -1,4 +1,4 @@
-// A tiny Cloudflare Worker + R2 upload host for Lorgn.
+// A tiny Cloudflare Worker + R2 upload host for Loren.
 //
 //   PUT /upload?name=shot.png&expires=86400   (Authorization: Bearer <UPLOAD_TOKEN>)
 //       ->  {"key": "AbC123xY.png", "delete_token": "...", "expires_at": 1790000000}

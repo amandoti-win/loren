@@ -99,7 +99,7 @@ PipeWireBaseEncodedStream::Encoder VideoPlatformWayland::encoderForFormat(Format
 }
 
 static void minimizeIfWindowsIntersect(const QRectF &rect) {
-    // Lorgn keeps its window up while recording so the Finish recording button stays
+    // Loren keeps its window up while recording so the Finish recording button stays
     // reachable on setups without a system tray.
     Q_UNUSED(rect)
     return;
