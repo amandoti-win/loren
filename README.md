@@ -11,7 +11,6 @@ Instant screenshot capture with shareable links on your own domain.
 [![Release](https://img.shields.io/github/v/release/amandoti-win/loren?color=7a1a34)](https://github.com/amandoti-win/loren/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/amandoti-win/loren/total?color=7a1a34)](https://github.com/amandoti-win/loren/releases)
 [![License](https://img.shields.io/github/license/amandoti-win/loren?color=7a1a34)](LICENSE)
-[![Sponsor](https://img.shields.io/badge/Sponsor-psalm2517-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/psalm2517)
 
 </div>
 
