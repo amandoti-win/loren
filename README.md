@@ -4,7 +4,7 @@
 
 # Loren ("lord" with an n)
 
-Instant screenshot capture with shareable links on your own domain.
+Instant screenshot capture with shareable links on your own domain. Eventually, this should be the privacy-focused version of Lightshot.
 
 [![Download](https://img.shields.io/badge/Download-.deb-7a1a34?style=for-the-badge)](https://github.com/amandoti-win/loren/releases/latest)
 
